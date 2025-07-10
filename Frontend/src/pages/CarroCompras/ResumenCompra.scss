@@ -1,0 +1,44 @@
+.resumen-compra{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        .left{
+            width: 260px;
+        }
+        .titulo-resumen{
+            font-size: 20px;
+            font-weight: 700;
+            margin-top: 10px;
+            margin: 0;
+        }
+        .contenedor-compra{
+            border: 1px solid #D5D5D5;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            .precios-contenedor{
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin: 30px;
+                width: 330px;
+            }
+            .precio{
+                display: flex;
+                flex-direction: row;
+                .oferta{
+                    color: #3AA423;
+                    font-weight: 700;
+                }.cantidad-descuento{
+                    color: #FC0000;
+                }
+            }.total{
+                display: flex;
+                flex-direction: row;
+                border-top: 1px solid black;
+                padding-top: 10px;
+            }
+        }.continuar-compra{
+            width: 100%;
+        }
+    }

@@ -1,0 +1,57 @@
+.checkout{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    height: auto;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    
+    .titulo{
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        text-align: left;
+        color: black;
+        h1{
+            margin-bottom: 30px;
+        }
+    }
+    form{
+        border: 1px solid #D5D5D5;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 30px;
+        margin-top: 20px;
+        .fila-formulario{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            gap: 40px;
+        }
+    }
+    input{
+        border: #9A9A9A 1px solid;
+        border-radius: 5px;
+        width: 20rem;
+        height: 48px;   
+        padding-left: 1rem ;
+    }.grupo-campo{
+        display: flex;
+        flex-direction: column;
+
+    }.grupo-campo-ancho-completo{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        input{
+            width: 100%;
+        }
+    }
+    .editar-resumen{
+        margin-top: 55px;
+    }
+}

@@ -1,0 +1,88 @@
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 64px 16px; 
+  background-color: white;
+  min-height: 70vh;
+}
+
+.login-card {
+  background-color: white;
+  padding: 32px; 
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 24px; 
+  font-size: 25.6px;
+  color: #333;
+}
+
+.correo,
+.password {
+  margin-bottom: 19.2px; 
+}
+
+.correo p,
+.password p {
+  margin-bottom: 8px;
+  font-size: 14.4px; 
+  color: #555;
+}
+
+.correo input,
+.password input {
+  width: 100%;
+  padding: 11.2px; 
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14.4px; 
+}
+
+.bot.Iniciar.Sesion,
+.bot-Iniciar-Sesion {
+  background-color: #ff4c2b;
+  color: #fff;
+  width: 100%;
+  padding: 12.8px; 
+  margin-top: 16px; 
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.bot-Iniciar-Sesion:hover {
+  background-color: #e63e1e;
+}
+
+.enlaces {
+  text-align: center;
+  margin-top: 24px; 
+  display: flex;
+  flex-direction: column;
+}
+
+.registro {
+  font-size: 14.4px; 
+  color: #ff4c2b;
+  cursor: pointer;
+  margin-top: 4.8px; 
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.olvide-contraseña {
+  font-size: 14.4px; 
+  color: #ff4c2b;
+  cursor: pointer;
+  margin-top: 4.8px; 
+  text-decoration: underline;
+}
+

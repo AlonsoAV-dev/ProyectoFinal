@@ -1,0 +1,32 @@
+
+.carro-compras{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    height: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    img{
+        width: auto;
+        height: 95px;
+    }
+    h1{
+        margin: 0;
+    }
+    .carro{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        .titulo{
+            display: flex;
+            flex-direction: row;
+            gap: 5px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+       
+    }
+}
+

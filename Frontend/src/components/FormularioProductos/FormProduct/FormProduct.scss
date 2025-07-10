@@ -1,0 +1,134 @@
+.contenedor-main{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+.agregarProducto {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ffffff;
+    width: 80%;
+    top: 10%;
+    left: 50%;
+    gap: 2rem;
+    margin: 50px;
+    h1{
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    #nombreProducto{
+        font-size: 14px;
+    }
+}
+.formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    width: 1224px;
+    border: #D5D5D5 1px solid;
+    border-radius: 5px;
+}
+
+
+
+.group-1{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    input{
+        border: #9A9A9A 1px solid;
+        border-radius: 5px;
+        width: 20rem;
+        padding-left: 1rem ;
+    }
+}
+form{
+        display: flex;
+        flex-direction: row;
+        gap: 14rem;
+}
+
+.group-2{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    input{
+        border: #9A9A9A 1px solid;
+        border-radius: 5px;
+        width: 20rem;
+        padding-left: 1rem ;
+    }
+}
+#archivo{
+    display: none;
+}
+
+button{
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    background-color: #FE624C;
+    border-radius: 5px;
+    color: white;
+    width: 15rem;
+    height: 2.5rem;
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    img{
+        height: 15px;
+        width: auto;
+    }
+}
+
+#stock{
+    width: 100%;
+}
+.stockproducto{
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    gap: 2rem;
+    input{
+        width: 15rem;
+        height: 2.5rem;
+    }
+}
+select{
+    padding: 12px 25px 12px 12px;
+    font-size: 13px;
+    color: #9a9c9d; 
+    border: #9A9A9A 1px solid;
+    border-radius: 5px;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+    cursor: pointer;
+}
+.categorias-estilo{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 0.5rem;
+    .agregarCategoria{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #FE624C;
+        width: auto;
+        height: 2.5rem;
+        border: none;
+        border-radius: 5px;
+        margin-top: 32.6px;
+        padding: 0.8rem;
+        cursor: pointer;
+    }
+}

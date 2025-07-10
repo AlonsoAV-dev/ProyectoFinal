@@ -1,0 +1,16 @@
+.form-group{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    input{
+        height: 2rem;
+    }#descripcion{
+        border: #9A9A9A 1px solid;
+        border-radius: 5px;
+        height: 8rem;
+        padding-right: 20px;
+        padding-bottom: 5.5rem;
+
+    }
+}

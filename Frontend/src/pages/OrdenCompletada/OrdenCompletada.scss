@@ -1,0 +1,65 @@
+.orden-completada{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .contenedor-izquierda{
+        width: 930px;
+        margin-bottom: 40px;
+    }
+    .seccion-orden-terminada{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        margin:1.7rem ;
+        padding-left: 86px;
+        img{
+            margin-left: 56rem;
+            width: 126px;
+            height: 84px;
+        }
+    }
+    .titulo-resumen-compra{
+        width: 100%;
+        display: flex;
+    }
+    .resumen-seccion{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+    .direccion-envio{
+        border: 1px solid #D5D5D5;
+        border-radius: 10px;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .contenedor-derecha{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 35px;
+        .boton-ofertas{
+            margin-top: 15px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+            button{
+                cursor: pointer;
+
+            }
+        }
+        .titulo-enviar{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 80px;
+            img{
+                width: 79px;
+                height: 79px;
+            }
+        }
+    }
+}

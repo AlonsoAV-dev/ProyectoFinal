@@ -1,0 +1,52 @@
+
+#eliminar-produc{
+    text-align: left;
+    color: #000000;
+}
+.contenedor-alerta{
+    width: 100%;
+    height: 75px;
+    display: flex;
+    flex-direction: row;
+    .icono-x {
+        font-size: 60px;
+        color: #f45b4e;
+        border: 7px solid #f45b4e;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+        line-height: 60px;
+        flex-shrink: 0;
+    }.contenido-texto {
+        margin-left: 30px;
+        p {
+            margin: 0;
+            font-size: 20px;
+            color: #000000;
+        }
+    }
+}
+
+.popup-custom {
+  border-radius: 12px;
+  font-family: 'Segoe UI', sans-serif;
+}
+.swal2-actions{
+    margin: 0;
+    padding: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: center;
+
+    .btn-eliminar{
+        padding: 2px;
+        border: none;
+    }.btn-eliminar-2{
+        padding: 2px;
+        border: none;
+        color: #363636;
+    }
+}
+

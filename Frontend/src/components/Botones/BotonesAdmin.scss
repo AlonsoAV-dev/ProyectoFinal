@@ -1,0 +1,21 @@
+.verUsuarios{
+    width: auto;
+    height: 1.8rem;
+    font-size: 10px;
+    background-color: #FE624C;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    gap: 0.5rem;
+    cursor: pointer;
+    img{
+        margin-left: 15px;
+    }
+    p{
+        margin-right: 15px;
+    }
+}

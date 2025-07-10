@@ -1,0 +1,175 @@
+.container-main{
+    display: flex;
+    flex-direction: column; 
+    gap: 20px;
+    width: 95%;
+    margin-top: 30px;
+    padding-left: 5rem;
+    > h2{
+        text-align: start;
+        padding: 0px;
+        margin: 0px;
+        margin-top: 10px;
+    }
+    .container-tabla{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+}
+.lista-categoria{
+    border: 1px solid #c6c6c6;
+    border-radius: 10px;
+    
+}
+.tabla-categorias{
+    border-collapse: collapse;   /* permite redondear */
+    width: 100%;
+    border-radius: 10px;
+    & img{
+        width: 3.5rem;
+        height: auto;
+        cursor: pointer;
+    }
+    & th, td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        vertical-align: middle;
+        border-bottom: 1px solid #A9A9A9; 
+    }& .tabla-categorias th {
+        background-color: white;
+        color: black;
+        font-weight: 400;
+    }.id-style{
+    color: #FE624C;
+    font-weight: 700;
+}
+}
+.tabla-categorias tr.categorias:hover {
+    background-color: #ffffff;
+}
+tr:last-child td {
+    border-bottom: none; /* evita doble línea al final */
+}
+
+input{
+    border: #9A9A9A 1px solid;
+    border-radius: 5px;
+    width: 100%;
+    padding-left: 1rem ;
+}
+input::placeholder {
+    color: #9A9A9A;
+}
+.busqueda{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.botones{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: end;
+    gap: 1rem;
+    width: 40%;
+    & button{
+        all: unset;
+        background-color: #FE624C;
+        border-radius: 5px;
+        color: white;
+        height: 2.2rem;
+        cursor: pointer;
+        text-align: center;
+
+    }& .Agregar{
+        width: 16rem;
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        justify-content: center;
+        align-items: center;
+    }& .Buscar{
+        width: 6.5rem;
+        
+    }& .Categorias{
+        width: 8.5rem;
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        justify-content: center;
+        align-items: center;
+        img{
+            height: 10px;
+            width: auto;
+        }
+    }
+}
+
+.paginacion{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    & button{
+        all: unset;
+        border-radius: 50%;
+        color: white;
+        height: 2.2rem;
+        cursor: pointer;
+        text-align: center;
+        
+    }& .anterior{
+        background-color: #FE624C;
+        width: 3rem;
+    }& .siguiente{
+        width: 3rem;
+        color: black;
+
+    }
+}
+.acciones{
+    display: flex;
+    flex-direction: row;
+    img {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+    }
+    
+}
+.acciones-iconos{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: top;
+    gap: 0.5rem;
+    img {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+    }#btn-borrar{
+                height: 24px;
+
+    }
+}
+a {
+    all: unset;
+}
+
+.th-acciones{
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.td-acciones {
+    display: flex;
+    justify-content: center;
+}

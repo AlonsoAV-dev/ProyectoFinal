@@ -1,0 +1,223 @@
+.pagina-principal {
+    padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .texto-bienvenida {
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .seccion-info-usuarios {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+
+    .seccion-izquierda {
+      flex: 2;
+      display: flex;
+      gap: 20px;
+
+      .info-card {
+        flex: 1;
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+        h3 {
+          color: #333;
+          margin-bottom: 15px;
+          font-size: 16px;
+        }
+
+        .info-contenido {
+          p {
+            margin: 8px 0;
+            color: #444;
+            font-size: 14px;
+
+            span {
+              font-weight: bold;
+              color: #111;
+            }
+          }
+        }
+
+        .botones-usuario {
+          margin-top: 15px;
+          display: flex;
+          gap: 10px;
+
+          .btn-accion-usuario {
+            flex: 1;
+            padding: 8px 12px;
+            background-color: #5a5a5a;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 13px;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+              background-color: #444444;
+            }
+          }
+        }
+      }
+    }
+
+    .seccion-derecha {
+        flex: 1;
+        display: flex;
+        flex-direction: row; 
+        align-items: center;
+        gap: 20px;
+      
+        .stats-container {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          flex: 1;
+      
+          .stat-card {
+            background: #ff4b4b;
+            border-radius: 8px;
+            padding: 15px 20px;
+            text-align: left;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+      
+            .texto {
+              font-size: 14px;
+            }
+      
+            .valor {
+              font-size: 20px;
+              font-weight: bold;
+            }
+          }
+        }
+      
+        .imagen-usuario {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 3px solid #f0f0f0;
+      
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+  }
+
+    .seccion-ordenes {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+        h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .buscar-orden {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+
+            input {
+                flex: 1;
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            button {
+                padding: 8px 16px;
+                background-color: #ff4b4b;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+        }
+
+        .tabla-ordenes {
+            overflow-x: auto;
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+
+                th {
+                    text-align: left;
+                    padding: 12px;
+                    border-bottom: 2px solid #eee;
+                    color: #666;
+                    font-weight: 600;
+                }
+
+                td {
+                    padding: 12px;
+                    border-bottom: 1px solid #eee;
+                    color: #333;
+
+                    &.orden-id {
+                        color: #ff4b4b;
+                        font-weight: 600;
+                    }
+                }
+         
+
+              .ver-detalles {
+                    padding: 6px 12px;
+                    background-color: #ff4b4b;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+    .paginacion {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 10px;
+    
+      button {
+        padding: 6px 12px;
+        border: none;
+        background-color: #ff4b4b;
+        cursor: pointer;
+        border-radius: 5px;
+    
+        &.activo {
+          background-color: #ff4b4b;
+          color: white;
+          font-weight: bold;
+        }
+    
+        &:disabled {
+          background-color: #ff4b4b;
+          cursor: not-allowed;
+        }
+      }
+    }
+    
+}
+

@@ -1,0 +1,49 @@
+.subir-imagen{
+    border: #9A9A9A 2px dashed;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 31.25rem;
+    height: 22.563rem;
+    gap: 10px;
+    img{
+        width: 20%;
+        height: auto;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }.btn-file{
+        all: unset;
+
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+
+        background-color: #D4D4D4;
+        border-radius: 5px;
+        color: #464646;
+        width: 13rem;
+        height: 2.5rem;
+        cursor: pointer;
+
+    }
+}
+.estilo-letra{
+    color: #888888;
+}
+.subir-imagen-editar{
+    border: #9A9A9A 2px dashed;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 31.25rem;
+    height: 22.563rem;
+    img{
+        width: auto;
+        height: 80%;
+    }
+}

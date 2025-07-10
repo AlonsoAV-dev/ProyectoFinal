@@ -1,0 +1,33 @@
+.tabla-ordenes {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #E6E6E6;
+    border-radius: 10px;
+    border-collapse: collapse;
+    font-size: 14px;
+    overflow: hidden;
+    th, td {
+        padding: 0.75rem 1rem;
+        text-align: center;
+        border-bottom: 1px solid #E6E6E6;
+    }
+    th {
+        background-color: #fff;
+        font-weight: bold;
+    }
+    .id_orden {
+        color: #FE624C;
+        font-weight: 600;
+    }
+
+    .estado-entregado {
+        color: #3AA423;
+        font-weight: 500;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+}
+
+

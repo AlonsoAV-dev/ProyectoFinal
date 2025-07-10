@@ -1,0 +1,315 @@
+// Estilos base y contenedores
+.detalle-orden-page {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.breadcrumb-container {
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+    color: #555;
+    a {
+        color: #007bff;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    span {
+        color: #777;
+    }
+}
+
+.order-details-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+    padding: 30px 40px;
+}
+
+// Encabezado de la orden
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; // Cambiado de center a flex-start para alinear título y resumen
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e9ecef;
+    flex-wrap: wrap; // Para responsividad
+    gap: 15px; // Espacio si los elementos se envuelven
+}
+
+.order-title {
+    font-size: 2rem; // Aumentado ligeramente
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0; // Quitar margen por defecto de h1
+}
+
+.order-id-main {
+    color: #e74c3c; // Un rojo más suave
+    font-weight: bold;
+}
+
+.order-summary {
+    text-align: right;
+    font-size: 0.95rem;
+    .order-status,
+    .total-amount {
+        margin-bottom: 8px;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    .status-label,
+    .total-label {
+        font-weight: 600;
+        color: #555;
+        margin-right: 8px;
+    }
+    .status-value {
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.9em;
+
+        &.status-entregado {
+            background-color: #d4edda; // Verde suave
+            color: #155724; // Verde oscuro
+        }
+        &.status-por-entregar {
+            background-color: #fff3cd; // Amarillo suave
+            color: #856404; // Amarillo oscuro
+        }
+        &.status-en-camino {
+            background-color: #cce5ff; // Azul suave
+            color: #004085; // Azul oscuro
+        }
+        &.status-cancelado {
+            background-color: #f8d7da; // Rojo suave
+            color: #721c24; // Rojo oscuro
+        }
+        &.status-procesando {
+            background-color: #e2e3e5; // Gris suave
+            color: #383d41; // Gris oscuro
+        }
+         // Añadir más estados si es necesario
+    }
+    .total-amount {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #333;
+    }
+}
+
+// Sección de productos
+.products-section {
+    margin-top: 30px;
+}
+
+.products-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 20px;
+}
+
+.products-table {
+    width: 100%;
+    border-collapse: collapse; // Cambiado a collapse para un look más limpio
+    margin-bottom: 25px;
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6; // Borde más sutil
+    }
+
+    th {
+        background-color: #f8f9fa; // Fondo claro para encabezados
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: #495057;
+        text-transform: uppercase; // Opcional: para dar énfasis
+    }
+
+    td {
+        font-size: 0.95rem;
+        vertical-align: middle;
+    }
+
+    .product-info-cell {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .product-image-table {
+        width: 45px;
+        height: 45px;
+        border-radius: 6px;
+        object-fit: cover;
+        border: 1px solid #eee; // Borde sutil para la imagen
+    }
+
+    .product-id-table {
+        font-size: 0.85rem;
+        color: #e74c3c; // Mismo color que el ID principal de la orden
+        font-weight: 600;
+    }
+
+    .product-name-table {
+        font-weight: 500;
+    }
+
+    .category-tag {
+        background-color: #e9ecef;
+        color: #495057;
+        padding: 4px 10px;
+        border-radius: 15px; // Más redondeado
+        font-size: 0.8rem;
+        font-weight: 500;
+        display: inline-block; // Para que el padding funcione bien
+    }
+
+    .quantity-table {
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .price-table {
+        text-align: right;
+        font-weight: 600;
+    }
+
+    tbody tr:hover {
+        background-color: #f1f3f5; // Hover sutil para las filas
+    }
+}
+
+// Paginación de productos
+.pagination-products {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+
+    button {
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        color: #007bff;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.9rem;
+
+        &:hover:not(:disabled):not(.disabled-dots) {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+        }
+
+        &:disabled:not(.disabled-dots) {
+            color: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        &.active {
+            background-color: #007bff;
+            color: #fff;
+            border-color: #007bff;
+            font-weight: bold;
+        }
+        
+        &.pagination-arrow {
+            font-weight: bold;
+        }
+
+        &.disabled-dots {
+            background-color: transparent;
+            border: none;
+            color: #6c757d;
+            cursor: default;
+            padding: 8px 4px; // Menos padding para los puntos
+        }
+    }
+}
+
+// Estados de Carga y Error
+.detalle-orden-container {
+    &.loading,
+    &.error {
+        text-align: center;
+        padding: 50px;
+        font-size: 1.2rem;
+        color: #555;
+    }
+    &.error {
+        color: #d9534f; // Rojo para errores
+    }
+}
+
+// Media Queries para responsividad (ejemplo básico)
+@media (max-width: 768px) {
+    .order-header {
+        flex-direction: column;
+        align-items: stretch; // Que ocupen todo el ancho
+        .order-summary {
+            text-align: left;
+            margin-top: 15px;
+        }
+    }
+    .products-table {
+        th, td {
+            padding: 10px 8px;
+            font-size: 0.9rem; // Reducir tamaño de fuente en tablas
+        }
+        .product-image-table {
+            width: 35px;
+            height: 35px;
+        }
+        .product-id-table {
+            font-size: 0.8rem;
+        }
+    }
+    .breadcrumb-container {
+        font-size: 0.85rem;
+    }
+    .order-title {
+        font-size: 1.7rem;
+    }
+    .products-title {
+        font-size: 1.2rem;
+    }
+    .pagination-products button {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .detalle-orden-page {
+        padding: 15px;
+    }
+    .order-details-card {
+        padding: 20px;
+    }
+
+    // Podrías necesitar hacer la tabla scrolleable horizontalmente en pantallas muy pequeñas
+    .products-section {
+        overflow-x: auto; // Permite scroll horizontal si la tabla es muy ancha
+    }
+
+    .products-table {
+        min-width: 450px; // Asegura un ancho mínimo para que no se comprima demasiado
+        th, td {
+          white-space: nowrap; // Evita que el texto se rompa en varias líneas
+        }
+    }
+}

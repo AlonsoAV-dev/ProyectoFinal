@@ -1,0 +1,71 @@
+.register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 64px 16px;
+    background-color: #ffffff;
+    min-height: 70vh;
+  }
+  
+  .register-card {
+    background-color: #ffffff;
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 700px;
+  }
+  
+  .register-card h2 {
+    text-align: left;
+    margin-bottom: 24px;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .fila-sector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .sector {
+    display: flex;
+    flex-direction: column;
+    height: 71px;
+  }
+  
+  .sector p {
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .sector input {
+    width: 273px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .boton-registrar {
+    background-color: #ff4c2b;
+    color: #fff;
+    width: 40%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 0 auto;
+    
+    
+  }
+  
+  .boton-registrar:hover {
+    background-color: #ff4c2b;
+  }

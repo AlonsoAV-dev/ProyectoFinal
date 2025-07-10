@@ -1,0 +1,79 @@
+
+.tablaUsuarios-admin{
+    width: 100%;
+    border: 1px solid #E6E6E6;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border-collapse: collapse;
+
+    img{
+        width: 30px;
+        height: 30px;
+        border-radius: 120px;
+    }
+    thead{
+        width: 100%;
+        border-collapse: collapse;
+        border-bottom: 1px solid #E6E6E6;
+        tr{
+            display: flex;
+            flex-direction: row;
+            font-size: 12px;
+            gap: 3.75rem;
+            width: 100%;
+            .nombre{
+                margin-right: 2.5rem;
+                padding-left: 2rem;
+            }
+        }
+
+    }
+    tbody{
+        font-size: 10px;
+        width: 100%;
+        tr{
+            display: flex;
+            flex-direction: row;
+            font-size: 12px;
+            gap:20px;
+            width: 100%; 
+            border-bottom: 1px solid #E6E6E6;
+        }
+        tr:last-child{
+            border-bottom: none; 
+        }   
+    }
+    & th, td {
+        padding: 0.75rem 1rem;
+        text-align: center;
+        vertical-align: middle;
+    }
+    td.nombre2{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        padding: 0px;
+        width: 12.5rem;
+        padding-left: 1.5rem;
+        gap: 10px;
+    }td.estado2{
+        width:6.25rem;
+        color: #3AA423;
+    }td.estado3{
+        color: #FC0000;
+    }button{
+        border-radius: 3px;
+        width: 4.375rem;
+        height: 20px;
+        font-size: 8px;   
+        border:#FE624C 1px solid;
+    }.boton-inactivo{
+        background-color: white;
+        color: #FC0000;
+        border: #FC0000 1px solid;
+    }
+}
+

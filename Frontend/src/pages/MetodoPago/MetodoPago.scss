@@ -1,0 +1,64 @@
+.checkout-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    margin-top: 10px;
+    gap: 20px;
+    .metodo-pago {
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        align-items: left;
+        width: 700px;
+        height: 100%;
+        gap: 10px;
+        margin-bottom: 70px;
+        h2{
+            text-align: left;
+        }
+    }
+    .resumen-compra{
+        margin-top: 20px;
+    }
+    .metodo-pago-box {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        width: 610px;
+        height: 400px;
+        flex-direction: column;
+        gap: 60px;
+        justify-content: center;
+        align-items: start;
+    }
+
+    .opcion-pago {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: left;
+        gap: 95px;
+    }
+    #opcion-2{
+        margin-left: 20px;
+        gap: 68px;
+    }
+    .input{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border-color: #FE624C;
+    }
+
+    img{
+        width: 200px;
+        height: auto;
+    }
+    #scan{
+        width: 100px;
+    }#pay{
+        width: 440px;
+    }
+}
+
