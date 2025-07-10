@@ -1,26 +1,39 @@
 import "./tablaProductos.scss" 
 import edit from '/assets/editar.png';
 import borrar from '/assets/delete.png';
-import { useState, useEffect  } from "react";
+import { useState, useEffect, use  } from "react";
 import { Link } from "react-router-dom";
 import {MostrarAlerta} from "./MostrarAlerta"
-const TablaProductos = ({productos, setLista_Productos}) => {
+import productoApi from "../../api/productoApi.js";
+
+
+const TablaProductos = () => {
+    
+    const [productos, setProductos]= useState([]);
     
     const [filtroProductos , setFiltroProductos] = useState(productos);
     const [busqueda, setBusqueda] = useState('');
-    useEffect(() => {
-        setFiltroProductos(productos);
-    }, [productos]);
 
     const filtrarProductos = () =>{
         const resultado = productos.filter((producto) => producto.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(busqueda.toLowerCase()));
         setFiltroProductos(resultado);
     }
+    
+    const handleLoadProductos = async () => {
+        const productosObtenidos = await productoApi.findAll();
+        setProductos(productosObtenidos);
+        setFiltroProductos(productosObtenidos);
+    }
+
     useEffect(() => {
         if(busqueda === ''){
             setFiltroProductos(productos);
         }
     },[busqueda]);
+
+    useEffect(() => {
+        handleLoadProductos();
+    }, []);
 
 
     return (
@@ -64,7 +77,7 @@ const TablaProductos = ({productos, setLista_Productos}) => {
                         <tr className="productos">
                             <td>
                                 <Link to={`/detalle-producto-admin/${producto.id}`}>
-                                    <img src={producto.img}
+                                    <img src={producto.imagen}
                                         alt={producto.nombre}/>
                                 </Link>
                             </td>
@@ -80,7 +93,7 @@ const TablaProductos = ({productos, setLista_Productos}) => {
                                         <img src={edit} className="btn-editar" alt="Botón" />
                                     </Link>
                                     <img src={borrar} className="btn-borrar" id="btn-borrar"
-                                    onClick={() => MostrarAlerta({ nombre: producto.nombre, id: producto.id, productos:productos, setProductos:setLista_Productos })}
+                                    onClick={() => MostrarAlerta({ nombre: producto.nombre, id: producto.id, handleLoadProductos: handleLoadProductos})}
                                     alt="Botón" />                       
                                 </div>
                             </td>

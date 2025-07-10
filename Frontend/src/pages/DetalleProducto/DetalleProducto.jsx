@@ -1,13 +1,27 @@
 import FormProduct from "../../components/FormularioProductos/FormProduct/FormProduct";
 import { useParams } from "react-router-dom";
- 
+import productosApi from "../../api/productoApi.js";
+import { useState, useEffect } from "react";
 
-const DetalleProducto = ({lista_productos, setLista_Productos}) => {
+const DetalleProducto = () => {
 
     const {id} = useParams();
-    let productoEncontrado= lista_productos.find((producto) => producto.id == id);
+    const [productoEncontrado, setProductoEncontrado] = useState(null);
+
+    const load = async () =>{
+        const data = await productosApi.findOne(id);
+        setProductoEncontrado(data);
+    }
+
+    useEffect(() => {
+        load();
+    }, []);
+
+    if (!productoEncontrado) return <p>Cargando producto...</p>; // 👈 Asegúrate que haya data
+
+
     const modo = "Detalle Producto";
-    const iconoImg = productoEncontrado.img;
+    const iconoImg = productoEncontrado.imagen;
 
     const detalleProducto = (e) => {
         e.preventDefault();
@@ -24,7 +38,7 @@ const DetalleProducto = ({lista_productos, setLista_Productos}) => {
     }
     return (
         <>   
-        <FormProduct onSubmit={detalleProducto} modo={modo} iconoImg={"."+iconoImg} producto={productoEncontrado} />         
+        <FormProduct onSubmit={detalleProducto} modo={modo} iconoImg={productoEncontrado.imagen} producto={productoEncontrado} />         
 
        </> 
     );

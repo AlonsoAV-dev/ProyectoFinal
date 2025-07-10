@@ -45,10 +45,10 @@ const FormProduct = ({ onSubmit, modo , producto = {}, iconoImg }) => {
                     defaultValue={producto.categoria || ""}                      
                     disabled={modo === "Detalle Producto"}                    
                         >    
-                        <option value="" className="texto-categoria" >{modo === "Detalle Producto" || "EditarProducto"? producto.categoria : "Seleccione la categoría del producto" }</option>
-                        <option value="frutas">Frutas y verduras</option>
-                        <option value="verduras">Lacteos y huevos</option>
-                        <option value="lacteos">Carnes, aves y pescados</option>
+                        <option className="texto-categoria" >{modo === "Detalle Producto" || "EditarProducto"? producto.categoria : "Seleccione la categoría del producto" }</option>
+                        <option value="Frutas y verduras">Frutas y verduras</option>
+                        <option value="Lacteos y huevos">Lacteos y huevos</option>
+                        <option value="Carnes, aves y pescados">Carnes, aves y pescados</option>
                     </select>
                 </FormGroup>
 

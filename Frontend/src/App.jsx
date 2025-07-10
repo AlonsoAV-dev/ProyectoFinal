@@ -74,12 +74,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Inicio />} /> 
           <Route path="/login" element={<Login />} />
-          <Route path="/products" element={<TablaProductos productos={lista_productos} setLista_Productos={setLista_Productos} />} />
-          <Route path="/agregar" element={<AgregarProducto lista_productos={lista_productos} setLista_Productos={setLista_Productos} />} />
-          <Route path="/editar/:id" element={<EditarProducto lista_productos={lista_productos} setLista_Productos={setLista_Productos} />} />
+          <Route path="/productos" element={<TablaProductos/>} />
+          <Route path="/agregar" element={<AgregarProducto  />} />
+          <Route path="/editar/:id" element={<EditarProducto />} />
           <Route path="/carrito" element={<CarroCompras lista_productos={lista_productos} setLista_Productos={setLista_Productos}/>}/>
           <Route path="/agregar-categoria" element={<AgregarCategoria categorias={lista_categorias} setCategorias={setListaCategorias}/>}/>
-          <Route path="/Detalle-producto-admin/:id" element={<DetalleProducto lista_productos={lista_productos} setLista_Productos={setLista_Productos}/>}/>
+          <Route path="/Detalle-producto-admin/:id" element={<DetalleProducto />}/>
           <Route path="/dashboard" element={<DashboardAdmin/>} />
           <Route path="/registro" element={<Register />} />
           <Route path="/olvide-contraseña" element={<Password />} />

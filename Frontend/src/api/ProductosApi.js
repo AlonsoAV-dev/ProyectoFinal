@@ -1,3 +1,5 @@
+import Password from "../pages/Password/Password";
+
 const lista_productos = [
     {
         id: "8123",
@@ -128,6 +130,7 @@ const lista_usuarios = [
         nombre: "Carlos Lopez",
         correo: "carlos.lopez@gmail.com",
         fechaRegistro: "25/01/2025",
+        Password: "123456",
         estado: "Activo",
         img: "./public/assets/user2.png"
     },

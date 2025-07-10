@@ -1,6 +1,5 @@
 import "./DashboardAdmin.scss";
 import BotonesAdmin from "../../components/Botones/BotonesAdmin";
-import apis from '../../api/ProductosApi';
 import DashRegistroUsuarios from "../../components/DashRegistroUsuarios/DashRegistroUsuarios";
 import DashDetalleUsuarios from "../../components/DashDetalleUsuarios/DashDetalleUsuarios";
 import DashListaOrdenes from "../../components/DashListaOrdenes/DashListaOrdenes";

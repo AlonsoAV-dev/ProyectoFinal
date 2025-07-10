@@ -3,6 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 
 import productosRouter from './routes/productos.js';
+import usersRouter from './routes/users.js';
 
 const app = express();
 
@@ -15,6 +16,6 @@ app.get('/', (req,res) =>  {
 })
 
 app.use('/productos', productosRouter);
-
+app.use('/users', usersRouter);
 
 export default app;
