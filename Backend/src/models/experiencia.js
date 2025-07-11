@@ -8,6 +8,10 @@ const Experiencia = sequelize.define("experiencia", {
         primaryKey: true,
         autoIncrement: true,
     },
+    imagen: {
+        type: DataTypes.STRING,
+        allowNull: true, // o false si es obligatorio
+    },    
     experiencia: {
         type: DataTypes.STRING,
         allowNull: false,

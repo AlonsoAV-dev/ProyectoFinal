@@ -1,93 +1,37 @@
 import { useNavigate, useParams } from "react-router-dom";
-import "./EditarExperiencia.scss"
+import "./EditarExperiencia.scss";
 import { useEffect, useState } from "react";
+import experienciaApi from "../../api/experienciaApi";
+import comercioApi from "../../api/comercioApi";
 
 function EditarExperiencia() {
-    const [experiencias, setExperiencias] = useState([
-            {
-                id: 1,
-                experiencia: "Cena para 2 en La Bisteca",
-                comercio: "La Bisteca",
-                costo: 100,
-                fecha_expiracion: "2025-12-05",
-                usado: false,
-                imagen: null,
-            },
-            {
-                id: 2,
-                experiencia: "Clase de cocina en Casa Gourmet",
-                comercio: "Casa Gourmet",
-                costo: 50,
-                fecha_expiracion: "2025-01-15",
-                usado: false,
-                imagen: null,
-            },
-            {
-                id: 3,
-                experiencia: "Tour de vinos en Bodega del Valle",
-                comercio: "Bodega del Valle",
-                costo: 75,
-                fecha_expiracion: "2025-03-20",
-                usado: true,
-                imagen: null,
-            },
-            {
-                id: 4,
-                experiencia: "Masaje relajante en Spa Relax",
-                comercio: "Spa Relax",
-                costo: 60,
-                fecha_expiracion: "2025-02-10",
-                usado: false,
-                imagen: null,
-            },
-            {
-                id: 5,
-                experiencia: "Entrada VIP a concierto de Rock",
-                comercio: "Conciertos Rock",
-                costo: 120,
-                fecha_expiracion: "2025-04-30",
-                usado: true,
-                imagen: null,
-            },
-            {
-                id: 6,
-                experiencia: "Clase de yoga al aire libre",
-                comercio: "Yoga Zen",
-                costo: 30,
-                fecha_expiracion: "2025-05-25",
-                usado: false,
-                imagen: null,
-            },
-            {
-                id: 7,
-                experiencia: "Excursión a la montaña con guía",
-                comercio: "Aventura Montañosa",
-                costo: 80,
-                fecha_expiracion: "2025-06-18",
-                usado: false,
-                imagen: null,
-            },
-            {
-                id: 8,
-                experiencia: "Noche de cine en casa con palomitas",
-                comercio: "Cine en Casa",
-                costo: 20,
-                fecha_expiracion: "2025-07-01",
-                usado: true,
-                imagen: null,
-            },
-        ]);
-
-    const {id} = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
+
     const [dataForm, setDataForm] = useState({
         experiencia: "",
         comercio: "",
         costo: 0,
         fecha_expiracion: "",
-        imagen: null,
+        imagen: "",
         usado: false,
-    })
+    });
+
+    const [comercios, setComercios] = useState([]);
+    const [previewImg, setPreviewImg] = useState("");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const experiencia = await experienciaApi.findOne(id);
+            const comerciosBD = await comercioApi.findAll();
+
+            setDataForm(experiencia);
+            setComercios(comerciosBD);
+            setPreviewImg(experiencia.imagen);
+        };
+
+        fetchData();
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -98,33 +42,19 @@ function EditarExperiencia() {
     };
 
     const handleImageChange = (e) => {
-        setDataForm({
-            ...dataForm,
-            imagen: e.target.files[0],  // Guardas el primer archivo seleccionado
-        });
+        const file = e.target.files[0];
+        if (file) {
+            const url = URL.createObjectURL(file);
+            setDataForm({ ...dataForm, imagen: url });
+            setPreviewImg(url);
+        }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setExperiencias(experiencias.map(exp => 
-            exp.id === parseInt(id) ? { ...exp, ...dataForm } : exp
-        ));
-        navigate("/mant-experiencias"); 
+        await experienciaApi.update({ ...dataForm, id });
+        navigate("/mant-experiencias");
     };
-    
-    useEffect(()=> {
-        const experienciaActual = experiencias.find(exp => exp.id === parseInt(id));
-        if (experienciaActual) {
-            setDataForm({
-                experiencia: experienciaActual.experiencia,
-                comercio: experienciaActual.comercio,
-                costo: experienciaActual.costo,
-                fecha_expiracion: experienciaActual.fecha_expiracion,
-                imagen: null,
-                usado: experienciaActual.usado
-            })
-        }
-    }, [id, experiencias]);
 
     return (
         <div className="editar-experiencia">
@@ -133,37 +63,103 @@ function EditarExperiencia() {
                 <form className="editar-experiencia-form" onSubmit={handleSubmit}>
                     <div className="form-info">
                         <div className="form-group">
-                            <label htmlFor="nombre">Nombre de la experiencia:</label>
-                            <input type="text" id="nombre" name="experiencia" required placeholder="Nombre de la experiencia" value={dataForm.experiencia} onChange={handleChange}/>
+                            <label htmlFor="experiencia">Nombre de la experiencia:</label>
+                            <input
+                                type="text"
+                                id="experiencia"
+                                name="experiencia"
+                                value={dataForm.experiencia}
+                                onChange={handleChange}
+                                required
+                            />
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="comercio">Comercio:</label>
-                            <input type="text" id="comercio" name="comercio" required placeholder="Presentacion" value={dataForm.comercio} onChange={handleChange}/>
+                            <select
+                                id="comercio"
+                                name="comercio"
+                                value={dataForm.comercio}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="">Selecciona un comercio</option>
+                                {comercios.map((c) => (
+                                    <option key={c.id} value={c.nombre}>{c.nombre}</option>
+                                ))}
+                            </select>
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="costo">Costo:</label>
-                            <input type="number" id="costo" name="costo" required placeholder="Selecciona la categoria del producto" value={dataForm.costo} onChange={handleChange}/>
+                            <input
+                                type="number"
+                                id="costo"
+                                name="costo"
+                                value={dataForm.costo}
+                                onChange={handleChange}
+                                required
+                            />
                         </div>
+
                         <div className="form-group">
                             <label htmlFor="fecha_expiracion">Fecha de expiración:</label>
-                            <input type="date" id="fecha_expiracion" name="fecha_expiracion" required value={dataForm.fecha_expiracion} onChange={handleChange}/>
+                            <input
+                                type="date"
+                                id="fecha_expiracion"
+                                name="fecha_expiracion"
+                                value={dataForm.fecha_expiracion}
+                                onChange={handleChange}
+                                required
+                            />
                         </div>
-                        <button type="submit">Editar Experiencia</button>
+
+                        <div className="form-group">
+                            <label htmlFor="usado">¿Usado?</label>
+                            <select
+                                id="usado"
+                                name="usado"
+                                value={dataForm.usado ? "true" : "false"}
+                                onChange={(e) =>
+                                    setDataForm({ ...dataForm, usado: e.target.value === "true" })
+                                }
+                                required
+                            >
+                                <option value="false">No</option>
+                                <option value="true">Sí</option>
+                            </select>
+                        </div>
+
+                        <button type="submit">Guardar Cambios</button>
                     </div>
+
                     <div className="form-image">
                         <div className="file-upload-container">
-                            <input type="file" id="imagen" name="imagen" accept="image/*" required onChange={handleImageChange}/>
+                            <input
+                                type="file"
+                                id="imagen"
+                                name="imagen"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                            />
                             <div>
                                 <span className="file-upload-text">Arrastra la imagen a esta zona</span>
                                 <p>o</p>
-                                <button type="button" className="file-upload-button">Seleccionar imagen</button>
+                                <button type="button" className="file-upload-button">
+                                    Seleccionar imagen
+                                </button>
+                                {previewImg && (
+                                    <div style={{ marginTop: "10px" }}>
+                                        <img src={previewImg} alt="preview" style={{ width: "200px" }} />
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-    )
+    );
 }
 
 export default EditarExperiencia;
