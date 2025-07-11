@@ -5,10 +5,9 @@ import bodyParser from 'body-parser';
 import productosRouter from './routes/productos.js';
 import usersRouter from './routes/users.js';
 import ordenRouter from './routes/orden.js';
-
+import carritoRouter from './routes/carrito.js';
+import itemCarritoRouter from './routes/itemCarrito.js';
 const app = express();
-
-
 app.use(cors())
 app.use(bodyParser.json())
 
@@ -19,5 +18,8 @@ app.get('/', (req,res) =>  {
 app.use('/productos', productosRouter);
 app.use('/users', usersRouter);
 app.use('/orden', ordenRouter);
+app.use('/carrito', carritoRouter);
+app.use('/itemCarrito', itemCarritoRouter); 
+
 
 export default app;
