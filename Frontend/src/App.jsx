@@ -77,7 +77,7 @@ function App() {
           <Route path="/productos" element={<TablaProductos/>} />
           <Route path="/agregar" element={<AgregarProducto  />} />
           <Route path="/editar/:id" element={<EditarProducto />} />
-          <Route path="/carrito" element={<CarroCompras lista_productos={lista_productos} setLista_Productos={setLista_Productos}/>}/>
+          <Route path="/carrito" element={<CarroCompras />}/>
           <Route path="/agregar-categoria" element={<AgregarCategoria categorias={lista_categorias} setCategorias={setListaCategorias}/>}/>
           <Route path="/Detalle-producto-admin/:id" element={<DetalleProducto />}/>
           <Route path="/dashboard" element={<DashboardAdmin/>} />
