@@ -1,9 +1,22 @@
 import "./DashListaOrdenes.scss"
-import apis from "../../api/ProductosApi"
+import ordenesApi from "../../api/ordenApi";
+import usuariosApi from "../../api/usuarioApi";
+
+import { useEffect, useState } from "react";
+
 const DashListaOrdenes = () => {
-    const lista_pedidos = apis.ordenApi.obtenerOrdenes();
-    const lista_usuarios= apis.usuarioApi.obtenerUsuarios();
-    
+    const [lista_pedidos, setListaPedidos] = useState([]);
+    const [lista_usuarios, setListaUsuarios] = useState([]);
+    const handleLoad = async () => {
+        const datosPedidos = await ordenesApi.findAll();
+        const datosUsuarios = await usuariosApi.findAll();
+        setListaPedidos(datosPedidos);
+        setListaUsuarios(datosUsuarios);
+    }
+    useEffect(() => {
+        handleLoad();
+    }, []);
+
     const BuscarUsuario = (id) =>{
         const user = lista_usuarios.find(u => u.id==id)
         return user ? user.nombre : "Usuario no encontrado";
@@ -22,15 +35,19 @@ const DashListaOrdenes = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {lista_pedidos.map((orden)=> (
+                    {lista_pedidos.slice(1, 8).map((orden)=> (
                         <tr>
                             <td className="id_orden">#{orden.id}</td>
                             <td>{
-                                BuscarUsuario(orden.usuarioId)
+                                BuscarUsuario(orden.idUsuario)
                                 }</td>
                             <td>{orden.fecha}</td>
-                            <td>{orden.total}</td>
-                            <td><span class="estado-entregado">{orden.estado}</span></td>
+                            <td>S/{orden.total}</td>
+                            <td>
+                                <span style={{ color: orden.estado === "Entregado" ? "green" : "red" }}>
+                                    {orden.estado}
+                                </span>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
