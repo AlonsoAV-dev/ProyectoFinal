@@ -10,10 +10,19 @@ import cafe from "../../assets/cafe.png";
 import carnes from "../../assets/carnes.png";
 import arroz from "../../assets/abarrotes.png";
 import cloro from "../../assets/limpieza.png";
+import listaProductos from "../../api/productoApi.js";
 
 function Inicio() {
   const [currentBannerSlide, setCurrentBannerSlide] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
+  const [productos, setProductos] = useState([]);
+  const handleProductos = async () => {
+    const datos = await listaProductos.findAll();
+    setProductos(datos);
+  };
+  useEffect(() => {
+    handleProductos();
+  }, []);
 
     const handleAddToCart = (e) => {
         e.preventDefault();
@@ -64,36 +73,16 @@ function Inicio() {
         <section>
           <h2 className="section-title">Lo más vendido</h2>
           <div className="products-grid">
-            <a href="#" className="productos-card">
-              <img src={pollocr} alt="Pollo Fresco"/>
-              <div className="product-title">Pollo Entero Fresco con presentación</div>
-              <div className="product-price">S/9.40 X KG</div>
-              <button className="btn-agregar" onClick={handleAddToCart}>AGREGAR</button>
-            </a>
-            <a href="#" className="productos-card">
-              <img src={zanahorias} alt="Zanahorias"/>
-              <div className="product-title">Zanahorias Orgánicas especiales</div>
-              <div className="product-price">S/9.40 X KG</div>
-              <button className="btn-agregar" onClick={handleAddToCart}>AGREGAR</button>
-            </a>
-            <a href="#" className="productos-card">
-              <img src={azucar} alt="Azucar"/>
-              <div className="product-title">Azucar moreno BELL'S</div>
-              <div className="product-price">S/9.40 X KG</div>
-              <button className="btn-agregar" onClick={handleAddToCart}>AGREGAR</button>
-            </a>
-            <a href="#" className="productos-card">
-              <img src={avena} alt="Avena"/>
-              <div className="product-title">Avena QUAKER tradicional</div>
-              <div className="product-price">S/9.40 X KG</div>
-              <button className="btn-agregar" onClick={handleAddToCart}>AGREGAR</button>
-            </a>
-            <a href="#" className="productos-card">
-              <img src={cafe} alt="Café"/>
-              <div className="product-title">Café Instantáneo ALTOMAYO</div>
-              <div className="product-price">S/9.40 X KG</div>
-              <button className="btn-agregar" onClick={handleAddToCart}>AGREGAR</button>
-            </a>
+            {productos.slice(0,5).map((producto) => (
+              <a href="#" className="productos-card" key={producto.id}>
+                <img src={producto.imagen} alt={producto.nombre} />
+                <div className="product-title">{producto.nombre}</div>
+                <div className="product-price">S/{producto.precio} X KG</div>
+                <button className="btn-agregar" onClick={() => handleAddToCart(producto)}>
+                  AGREGAR
+                </button>
+              </a>
+            ))}
           </div>
         </section>
       </main>
