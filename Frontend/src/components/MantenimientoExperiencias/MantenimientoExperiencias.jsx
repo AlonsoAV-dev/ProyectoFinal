@@ -1,85 +1,24 @@
 import "./MantenimientoExperiencias.scss";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import experienciasApi from "../../api/experienciaApi.js";
 
 function MantenimientoExperiencias({ }) {
-    const [experiencias, setExperiencias] = useState([
-        {
-            id: 1,
-            experiencia: "Cena para 2 en La Bisteca",
-            comercio: "La Bisteca",
-            costo: 100,
-            fecha_expiracion: "05/12/2025",
-            usado: false,
-            imagen: null,
-        },
-        {
-            id: 2,
-            experiencia: "Clase de cocina en Casa Gourmet",
-            comercio: "Casa Gourmet",
-            costo: 50,
-            fecha_expiracion: "15/01/2025",
-            usado: false,
-            imagen: null,
-        },
-        {
-            id: 3,
-            experiencia: "Tour de vinos en Bodega del Valle",
-            comercio: "Bodega del Valle",
-            costo: 75,
-            fecha_expiracion: "20/03/2025",
-            usado: true,
-            imagen: null,
-        },
-        {
-            id: 4,
-            experiencia: "Masaje relajante en Spa Relax",
-            comercio: "Spa Relax",
-            costo: 60,
-            fecha_expiracion: "10/02/2025",
-            usado: false,
-            imagen: null,
-        },
-        {
-            id: 5,
-            experiencia: "Entrada VIP a concierto de Rock",
-            comercio: "Conciertos Rock",
-            costo: 120,
-            fecha_expiracion: "30/04/2025",
-            usado: true,
-            imagen: null,
-        },
-        {
-            id: 6,
-            experiencia: "Clase de yoga al aire libre",
-            comercio: "Yoga Zen",
-            costo: 30,
-            fecha_expiracion: "25/05/2025",
-            usado: false,
-            imagen: null,
-        },
-        {
-            id: 7,
-            experiencia: "Excursión a la montaña con guía",
-            comercio: "Aventura Montañosa",
-            costo: 80,
-            fecha_expiracion: "18/06/2025",
-            usado: false,
-            imagen: null,
-        },
-        {
-            id: 8,
-            experiencia: "Noche de cine en casa con palomitas",
-            comercio: "Cine en Casa",
-            costo: 20,
-            fecha_expiracion: "01/07/2025",
-            usado: true,
-            imagen: null,
-        },
-    ]);
+    const [experiencias, setExperiencias] = useState([]);
 
-    const handleDelete = (id) => {
-        setExperiencias(experiencias.filter(exp => exp.id !== id));
+    useEffect(() => {
+        const fetchExperiencias = async () => {
+            const data = await experienciasApi.findAll();
+            setExperiencias(data);
+        };
+        fetchExperiencias();
+    }, []);
+
+    const handleDelete = async (id) => {
+        await experienciasApi.remove(id);
+        const data = await experienciasApi.findAll();
+        setExperiencias(data);
     }
 
     return (

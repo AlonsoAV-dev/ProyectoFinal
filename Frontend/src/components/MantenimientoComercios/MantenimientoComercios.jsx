@@ -1,21 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./MantenimientoComercios.scss"
 import { Link } from "react-router-dom";
+import comerciosApi from "../../api/comercioApi.js";
 
 function MantenimientoComercios() {
-    const [comercios, setComercios] = useState([
-        { id: 1, comercio: "La Bisteca" },
-        { id: 2, comercio: "Casa Gourmet" },
-        { id: 3, comercio: "Bodega del Valle" },
-        { id: 4, comercio: "Spa Relax" },
-        { id: 5, comercio: "Conciertos Rock" },
-        { id: 6, comercio: "Yoga Zen" },
-        { id: 7, comercio: "Aventura Montañosa" },
-        { id: 8, comercio: "Cine en Casa" },
-    ]);
+    const [comercios, setComercios] = useState([]);
 
-    const handleDelete = (id) => {
-        setComercios(comercios.filter(comercio => comercio.id !== id));
+    useEffect(() => {
+        const fetchComercios = async () => {
+            const data = await comerciosApi.findAll();
+            setComercios(data);
+        };
+    
+        fetchComercios();
+    }, []);
+
+    const handleDelete = async (id) => {
+        const result = await comerciosApi.remove(id);
+        if (result) {
+            setComercios(prev => prev.filter(comercio => comercio.id !== id));
+        } else {
+            alert("Error al eliminar el comercio");
+        }
     }
 
     return (
@@ -54,7 +60,7 @@ function MantenimientoComercios() {
                                 {comercios.map((comercio, index) => (
                                     <tr key={index}>
                                         <td>{comercio.id}</td>
-                                        <td>{comercio.comercio}</td>
+                                        <td>{comercio.nombre}</td>
                                         <td className="acciones-exp">
                                             <Link to={`/editar-comercio/${comercio.id}`}>
                                                 <button className="btn-editar-exp">Editar</button>

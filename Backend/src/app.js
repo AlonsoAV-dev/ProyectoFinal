@@ -4,6 +4,9 @@ import bodyParser from 'body-parser';
 
 import productosRouter from './routes/productos.js';
 import usersRouter from './routes/users.js';
+import comerciosRouter from './routes/comercios.js';
+import experienciasRouter from './routes/experiencias.js';
+
 import ordenRouter from './routes/orden.js';
 import carritoRouter from './routes/carrito.js';
 import itemCarritoRouter from './routes/itemCarrito.js';
@@ -17,6 +20,8 @@ app.get('/', (req,res) =>  {
 
 app.use('/productos', productosRouter);
 app.use('/users', usersRouter);
+app.use('/comercios', comerciosRouter);
+app.use('/experiencias', experienciasRouter);
 app.use('/orden', ordenRouter);
 app.use('/carrito', carritoRouter);
 app.use('/itemCarrito', itemCarritoRouter); 
