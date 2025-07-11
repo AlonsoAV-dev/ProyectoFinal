@@ -11,7 +11,7 @@ import carnes from "../../assets/carnes.png";
 import arroz from "../../assets/abarrotes.png";
 import cloro from "../../assets/limpieza.png";
 import listaProductos from "../../api/productoApi.js";
-
+import funcionAgregarCarro from "../../components/AddToCart/AddToCart.jsx";
 function Inicio() {
   const [currentBannerSlide, setCurrentBannerSlide] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,9 +24,10 @@ function Inicio() {
     handleProductos();
   }, []);
 
-    const handleAddToCart = (e) => {
+    const handleAddToCart = async (e, producto) => {
         e.preventDefault();
         const button = e.currentTarget;
+        await funcionAgregarCarro(producto);
         button.textContent = 'AGREGADO ✓';
         button.style.backgroundColor = '#4caf50';
         
@@ -78,7 +79,7 @@ function Inicio() {
                 <img src={producto.imagen} alt={producto.nombre} />
                 <div className="product-title">{producto.nombre}</div>
                 <div className="product-price">S/{producto.precio} X KG</div>
-                <button className="btn-agregar" onClick={() => handleAddToCart(producto)}>
+                <button className="btn-agregar" onClick={(e) => handleAddToCart(e, producto)}>
                   AGREGAR
                 </button>
               </a>

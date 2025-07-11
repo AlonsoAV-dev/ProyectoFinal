@@ -5,7 +5,7 @@ const ProductoCarrito = ({ producto, cantidad, cambiarCantidad, soloLectura = fa
   return (
     <div className="descripcion-compra">
       <button className="boton-check">✔</button>
-      <img src={producto.imagen}  />
+      <img src={producto.imagen} alt={producto.nombre} />
       <div className="nombre-producto">
         <p><b>{producto.nombre}</b></p>
         <span className="presentacion">Presentación: {producto.presentacion}</span>
@@ -19,14 +19,14 @@ const ProductoCarrito = ({ producto, cantidad, cambiarCantidad, soloLectura = fa
         ) : (
           <div className="aumentar-cantidad">
             <span className="cantidad">Cantidad</span>
-            <button onClick={() => cambiarCantidad(producto.id, 1)} className="operacion">+</button>
+            <button onClick={() => cambiarCantidad(1)} className="operacion">+</button>
             <div className="unidades"><p>{cantidad}</p></div>
             <button
-              onClick={() => cambiarCantidad(producto.id, -1)}
+              onClick={() => cambiarCantidad(-1)}
               disabled={cantidad === 1}
               className="operacion"
             >-</button>
-            <img src={deleteImg} alt="eliminar" className="eliminar" />
+            <img src={deleteImg} alt="eliminar" className="eliminar"  />
           </div>
         )}
       </div>

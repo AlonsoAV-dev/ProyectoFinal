@@ -1,73 +1,111 @@
 import "./CarroCompras.scss";
-import polloImg from "../../../public/assets/Pollo.png";
-import deleteImg from "../../../public/assets/delete2.png";
 import ResumenCompra from "./ResumenCompra";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductoCarrito from "../ProductosCarrito/ProductosCarrito";
+import carritoApi from "../../api/carritoApi.js";
+import itemCarritoApi from "../../api/itemCarritoApi.js";
+import productosApi from "../../api/productoApi.js";
 
-const CarroCompras = ({lista_productos}, setLista_Productos) => {
-    const [cantidades, setCantidades] = useState({});
-    function cambiarCantidad(id, op) {
-        const actual = cantidades[id] ?? 1;  
-        const nueva = Math.max(actual + op, 0);
-        
-        const copia = { ...cantidades };
-        copia[id] = nueva;
-        setCantidades(copia);
-    }
-    const subtotal = lista_productos.reduce((suma, producto) => {
-        const cantidad = cantidades[producto.id] ?? 1;
-        return suma + producto.precio * cantidad;
+const CarroCompras = () => {
+    const usuarioId = 15;
+    const [itemCarrito, setItemCarrito] = useState([]);
+    const [productosEnCarrito, setProductosEnCarrito] = useState([]);
+
+    const handleCarrito = async () => {
+        const carrito = await carritoApi.findByUsuario(usuarioId);
+        if (carrito) {
+            const items = await itemCarritoApi.findByCarrito(carrito.id);
+            setItemCarrito(items);
+        }
+    };
+
+    const handleProductosCarrito = async () => {
+        if (!itemCarrito.length) return;
+
+        const productos = await Promise.all(
+            itemCarrito.map(async (item) => {
+                const producto = await productosApi.findOne(item.idProducto);
+                return {
+                    ...producto,
+                    cantidad: item.cantidad,
+                    idItemCarrito: item.id // importante para update
+                };
+            })
+        );
+
+        setProductosEnCarrito(productos);
+    };
+
+    useEffect(() => {
+        handleCarrito();
+    }, []);
+
+    useEffect(() => {
+        handleProductosCarrito();
+    }, [itemCarrito]);
+
+    const cambiarCantidad = async (idItemCarrito, idProducto, op) => {
+        const nuevosProductos = productosEnCarrito.map((p) => {
+            if (p.id === idProducto) {
+                const nuevaCantidad = Math.max(p.cantidad + op, 1);
+                // Actualiza backend
+                itemCarritoApi.update({
+                    id: idItemCarrito,
+                    cantidad: nuevaCantidad
+                });
+                return { ...p, cantidad: nuevaCantidad };
+            }
+            return p;
+        });
+
+        setProductosEnCarrito(nuevosProductos);
+    };
+
+    const subtotal = productosEnCarrito.reduce((suma, producto) => {
+        return suma + producto.precio * producto.cantidad;
     }, 0);
 
-    const cantidadTotal = lista_productos.reduce((suma, producto) => {
-        const cantidad = cantidades[producto.id] ?? 1;
-        return suma + cantidad;
+    const cantidadTotal = productosEnCarrito.reduce((suma, producto) => {
+        return suma + producto.cantidad;
     }, 0);
 
-    const descuentoPorcentaje = 0.10; 
-    const descuento = subtotal * descuentoPorcentaje;
+    const descuento = subtotal * 0.10;
     const total = subtotal - descuento;
-
-    const productosSeleccionados = lista_productos.map((p) => ({
-    ...p,
-    cantidad: cantidades[p.id] ?? 1
-    }));
 
     localStorage.setItem("resumen", JSON.stringify({
         subtotal,
         descuento,
         total,
         cantidadTotal,
-        productos: productosSeleccionados
+        productos: productosEnCarrito
     }));
 
     return (
-        <>
-            <div className="carro-compras">
-                <div className="carro">
-                    <div className="titulo">
-                        <h1>Compra</h1>
-                        <p>(10 productos)</p>
-                    </div>
-                    
-                    <div className="productos-carrito">
-                        {lista_productos.map((producto)=> (
-                            <ProductoCarrito      
-                            producto={producto}
-                            cantidad={cantidades[producto.id] ?? 1}
-                            cambiarCantidad={cambiarCantidad}
-                            soloLectura={false}
-                            />
-                        ))
-                        }   
-                    </div>
+        <div className="carro-compras">
+            <div className="carro">
+                <div className="titulo">
+                    <h1>Compra</h1>
+                    <p>({cantidadTotal} productos)</p>
                 </div>
-                
-                <ResumenCompra modo="Continuar compra" />
-            </div>           
-        </>
-    )
-}
+
+                <div className="productos-carrito">
+                    {productosEnCarrito.map((producto) => (
+                        <ProductoCarrito
+                            key={producto.id}
+                            producto={producto}
+                            cantidad={producto.cantidad}
+                            cambiarCantidad={(op) =>
+                                cambiarCantidad(producto.idItemCarrito, producto.id, op)
+                            }
+                            soloLectura={false}
+                        />
+                    ))}
+                </div>
+            </div>
+
+            <ResumenCompra modo="Continuar compra" />
+        </div>
+    );
+};
 
 export default CarroCompras;
