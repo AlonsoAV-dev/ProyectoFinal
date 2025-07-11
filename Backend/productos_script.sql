@@ -27,14 +27,44 @@ INSERT INTO productos (nombre, presentacion, descripcion, categoria, stock, prec
   CURRENT_TIMESTAMP,
   CURRENT_TIMESTAMP);
 
-INSERT INTO Usuarios (nombre, apellido, direccion, ciudad, telefono, correo, nombreDeUsuario, password, fechaRegistro, estado, img, createdAt, updatedAt)
+
+INSERT INTO users (nombre, apellido, direccion, ciudad, telefono, correo, nombreDeUsuario, password, "fechaRegistro", estado, img, "createdAt", "updatedAt")
 VALUES 
 ('Juan', 'Perez', 'ABC', 'abc', '92343244', 'juan.perez@gmail.com', 'JuanP123', 'hola123', '2025-01-20', 'Activo', './public/assets/user2.png', '2025-01-20 10:00:00', '2025-01-20 10:00:00'),
 
 ('María', 'Gómez', 'Av. Central 456', 'Lima', '98765432', 'maria.gomez@gmail.com', 'MariaG89', 'clave456', '2025-01-21', 'Activo', './public/assets/user3.png', '2025-01-21 11:30:00', '2025-01-21 11:30:00'),
 
-('Luis', 'Ramírez', 'Jr. Las Flores 789', 'Cusco', '91234567', 'luis.ramirez@yahoo.com', 'LuisR21', 'pass789', '2025-01-22', 'Inactivo', './public/assets/user4.png', '2025-01-22 09:15:00', '2025-01-22 09:15:00'),
+('Luis', 'Ramírez', 'Jr. Las Flores 789', 'Cusco', '91234567', 'luis.ramirez@yahoo.com', 'LuisR21', 'pass789', '2025-01-22', 'Inactivo', './public/assets/user1.png', '2025-01-22 09:15:00', '2025-01-22 09:15:00'),
 
-('Ana', 'Torres', 'Mz C Lote 5', 'Arequipa', '93456789', 'ana.torres@outlook.com', 'AnaT2025', 'torres123', '2025-01-23', 'Activo', './public/assets/user5.png', '2025-01-23 08:45:00', '2025-01-23 08:45:00'),
+('Ana', 'Torres', 'Mz C Lote 5', 'Arequipa', '93456789', 'ana.torres@outlook.com', 'AnaT2025', 'torres123', '2025-01-23', 'Activo', './public/assets/user3.png', '2025-01-23 08:45:00', '2025-01-23 08:45:00'),
 
-('Carlos', 'Sánchez', 'Calle Lima 333', 'Trujillo', '99887766', 'carlos.s@gmail.com', 'CarlSanch', 'qwerty12', '2025-01-24', 'Activo', './public/assets/user6.png', '2025-01-24 14:20:00', '2025-01-24 14:20:00');
+('Carlos', 'Sánchez', 'Calle Lima 333', 'Trujillo', '99887766', 'carlos.s@gmail.com', 'CarlSanch', 'qwerty12', '2025-01-24', 'Activo', './public/assets/user2.png', '2025-01-24 14:20:00', '2025-01-24 14:20:00'),
+
+('Valeria', 'Flores', 'Av. Los Álamos 321', 'Chiclayo', '91122334', 'valeria.f@gmail.com', 'ValeF123', 'valepass', '2025-01-25', 'Activo', './public/assets/user3.png', '2025-01-25 12:10:00', '2025-01-25 12:10:00'),
+
+('Diego', 'Luna', 'Calle El Sol 100', 'Huancayo', '92233445', 'diego.luna@gmail.com', 'DgLuna', 'lunapass', '2025-01-26', 'Activo', './public/assets/user2.png', '2025-01-26 13:40:00', '2025-01-26 13:40:00'),
+
+('Lucía', 'Reyes', 'Jr. Primavera 55', 'Piura', '93344556', 'lucia.reyes@yahoo.com', 'LuciaR', 'reyespw', '2025-01-27', 'Inactivo', './public/assets/user3.png', '2025-01-27 15:25:00', '2025-01-27 15:25:00');
+
+
+INSERT INTO "ordens"(
+  "idUsuario", Fecha, Total, "subTotal", "metodoDeEntrega",
+  "nroTarjeta", "tipoTarjeta", estado , "createdAt", "updatedAt"
+)
+VALUES 
+(14, '2025-07-09', 80.90, 75.00, 'Delivery', '4111111111111111', 'Visa', 'Entregado','2025-07-09 10:30:00', '2025-07-09 10:30:00'),
+(15, '2025-07-10', 125.00, 115.00, 'Retiro en tienda', '5500000000000004', 'MasterCard', 'Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00'),
+(16, '2025-07-11', 60.40, 60.40, 'Delivery', '340000000000009', 'American Express', 'Entregado','2025-07-11 11:15:00', '2025-07-11 11:15:00'),
+(17, '2025-07-12', 95.50, 90.00, 'Delivery', '4111111111111111', 'Visa', 'Entregado','2025-07-12 09:45:00', '2025-07-12 09:45:00'),
+(18, '2025-07-13', 130.00, 120.00, 'Delivery', '6011000000000004', 'Discover', 'Por entregar','2025-07-13 13:20:00', '2025-07-13 13:20:00'),
+(19, '2025-07-14', 70.00, 65.00, 'Retiro en tienda', '4111111111111111', 'Visa', 'Entregado','2025-07-14 14:00:00', '2025-07-14 14:00:00'),
+(20, '2025-07-15', 105.00, 100.00, 'Delivery', '5500000000000004', 'MasterCard', 'Entregado','2025-07-15 16:10:00', '2025-07-15 16:10:00'),
+(21, '2025-07-16', 140.25, 130.25, 'Retiro en tienda', '340000000000009', 'American Express', 'Por entregar','2025-07-16 17:00:00', '2025-07-16 17:00:00'),
+(14, '2025-07-01', 120.50, 100.50, 'Delivery', '4111111111111111', 'Visa','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00'),
+(15, '2025-07-02', 75.00, 70.00, 'Retiro en tienda', '5500000000000004', 'MasterCard','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00'),
+(16, '2025-07-03', 45.30, 45.30, 'Delivery', '340000000000009', 'American Express','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00'),
+(17, '2025-07-04', 89.99, 85.00, 'Delivery', '4111111111111111', 'Visa','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00'),
+(18, '2025-07-05', 150.00, 140.00, 'Retiro en tienda', '6011000000000004', 'Discover','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00'),
+(19, '2025-07-06', 60.75, 55.75, 'Delivery', '4111111111111111', 'Visa','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00'),
+(20, '2025-07-07', 110.20, 100.20, 'Delivery', '5500000000000004', 'MasterCard','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00'),
+(21, '2025-07-08', 95.60, 90.00, 'Retiro en tienda', '340000000000009', 'American Express','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00')

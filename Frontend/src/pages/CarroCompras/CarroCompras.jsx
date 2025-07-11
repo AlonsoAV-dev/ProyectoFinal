@@ -6,16 +6,11 @@ import { useState } from "react";
 import ProductoCarrito from "../ProductosCarrito/ProductosCarrito";
 
 const CarroCompras = ({lista_productos}, setLista_Productos) => {
-    
-
-
     const [cantidades, setCantidades] = useState({});
-
     function cambiarCantidad(id, op) {
         const actual = cantidades[id] ?? 1;  
         const nueva = Math.max(actual + op, 0);
         
-        // actualizar solo ese producto
         const copia = { ...cantidades };
         copia[id] = nueva;
         setCantidades(copia);

@@ -1,18 +1,28 @@
 import "./DashRegistroUsuarios.scss"
-import api from "../../api/ProductosApi";
+import usuarioApi from "../../api/usuarioApi";
 import { useEffect, useState } from "react";
 
-const DashRegistroUsuarios = () =>{
-    const usuarios = api.usuarioApi;
-    const [lista_usuarios, setLista_usuarios] = useState(() => {
-        return usuarios.obtenerUsuarios();
-    });
+const DashRegistroUsuarios = ( {lista_usuarios, setListaUsuarios,activoId,setActivoId}) =>{
+    const handleUsuarios = async () => {
+        const datos = await usuarioApi.findAll();
+        setListaUsuarios(datos);
+        if (datos.length > 0) {
+            setActivoId(datos[0].id);
+        }
+    }
 
-    useEffect(() => {    
-        usuarios.guardarUsuarios(lista_usuarios);        
-    },[lista_usuarios]);
-    
-    const [activoId, setActivoId] = useState(null);
+    useEffect(() => {
+        handleUsuarios();
+    }, []);
+
+    const changeEstado = async (id, nuevoEstado) => {
+        await usuarioApi.update({ id, estado: nuevoEstado });
+        setListaUsuarios(prevUsuarios => 
+            prevUsuarios.map(usuario => 
+                usuario.id == id ? { ...usuario, estado: nuevoEstado } : usuario
+            )
+        );
+    };
 
     return(
         <>
@@ -26,7 +36,7 @@ const DashRegistroUsuarios = () =>{
             </thead>
             <tbody>
                 {
-                lista_usuarios.map((usuario)=>(
+                lista_usuarios.slice(0, 7).map((usuario)=>(
                     <tr >
                         <td className="nombre2"> 
                             <img src={usuario.img} alt={usuario.nombre} /> {usuario.nombre}
@@ -39,9 +49,9 @@ const DashRegistroUsuarios = () =>{
                         <td>
                             <div className="acciones-iconos">                                                                                            
                                 {usuario.estado == "Activo"? 
-                                    (<button className="acciones-usuarios">Desactivar</button>) 
+                                    (<button onClick={() => changeEstado(usuario.id, "Inactivo")} className="acciones-usuarios">Desactivar</button>) 
                                     : 
-                                    (<button className="acciones-usuarios">Activar</button>)
+                                    (<button onClick={() => changeEstado(usuario.id, "Activo")} className="acciones-usuarios">Activar</button>)
                                 }
                                 <button  className={
                                     activoId === usuario.id ? "boton-activo" : "boton-inactivo"

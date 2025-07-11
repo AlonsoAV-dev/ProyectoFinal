@@ -5,7 +5,7 @@ const ProductoCarrito = ({ producto, cantidad, cambiarCantidad, soloLectura = fa
   return (
     <div className="descripcion-compra">
       <button className="boton-check">✔</button>
-      <img src={producto.img} alt={producto.nombre} />
+      <img src={producto.imagen}  />
       <div className="nombre-producto">
         <p><b>{producto.nombre}</b></p>
         <span className="presentacion">Presentación: {producto.presentacion}</span>

@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 
 import productosRouter from './routes/productos.js';
 import usersRouter from './routes/users.js';
+import ordenRouter from './routes/orden.js';
 
 const app = express();
 
@@ -17,5 +18,6 @@ app.get('/', (req,res) =>  {
 
 app.use('/productos', productosRouter);
 app.use('/users', usersRouter);
+app.use('/orden', ordenRouter);
 
 export default app;

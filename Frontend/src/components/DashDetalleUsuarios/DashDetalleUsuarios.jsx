@@ -1,11 +1,21 @@
 import "./DashDetalleUsuarios.scss"
 import apis from "../../api/ProductosApi"
+import pedidosApi from "../../api/ordenApi"
+import { useEffect, useState } from "react";
 
-const DashDetalleUsuarios = () =>{
+const DashDetalleUsuarios = ({usuario}) =>{
 
-    const lista_user = apis.usuarioApi.obtenerUsuarios();
-    const user=lista_user[0];
-    const lista_pedidos = apis.ordenApi.obtenerOrdenes();
+    const user = usuario;
+    const [lista_pedidos, setListaPedidos] = useState([]);
+    
+    const handlePedidos = async () => {
+        const datos = await pedidosApi.findByUsuario(user.id);
+        setListaPedidos(datos);
+    }
+    useEffect(() => {
+        handlePedidos();
+    }, [user.id]);
+    
     return(
         <>
 
