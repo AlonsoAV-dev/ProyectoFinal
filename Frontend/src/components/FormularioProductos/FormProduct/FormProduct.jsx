@@ -96,15 +96,15 @@ const FormProduct = ({ onSubmit, modo , producto = {}, iconoImg, categorias = []
                 </FormGroup>
                 {modo === "Detalle Producto"?
                 <Link to={`/editar/${producto.id}`}> 
-                  <button type="submit"> Editar producto</button>
+                  <button  type="submit"> Editar producto</button>
                 </Link> 
                 :
-                <button type="submit">
+                <button type="submit"  onClick={() => alert("Producto editado exitosamente")} >
                     {modo === "EditarProducto" ? (
-                        "Editar producto"
-                      ) : (
+                        "Editar producto"  
+                      ) : ( 
                         <>
-                          <img src={agregarImg}  alt="Agregar" /> Agregar producto
+                          <img src={agregarImg}   alt="Agregar" /> Agregar producto
                         </>
                     )}
                 </button>

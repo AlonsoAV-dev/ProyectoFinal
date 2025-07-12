@@ -46,10 +46,12 @@ const TablaProductos = () => {
             </input>
             <div className="botones">
                 <button id="Buscar" onClick={()=> filtrarProductos()} className="Buscar">Buscar</button>
+                <Link to="/lista-categorias"> 
                 <button id="Categorias" className="Categorias" >
                     <img src="../../../public/assets/hamburguer.png"/>
                     <p>Categorias</p>
                 </button>
+                </Link>
                 <Link to="/agregar">  
                     <button id="Agregar" className="Agregar">
                         <img src="../../../public/assets/agregar.png"/> Agregar producto                        

@@ -1,4 +1,3 @@
-import "./agregarProducto.scss"
 import FormProduct from "../../components/FormularioProductos/FormProduct/FormProduct";
 import iconoImg from "../../../public/assets/icono-img.png"
 import productosApi from "../../api/productoApi.js";

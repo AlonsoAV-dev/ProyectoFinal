@@ -1,4 +1,4 @@
-import "./DashboardAdmin.scss";
+import "./dashboardAdmin.scss";
 import BotonesAdmin from "../../components/Botones/BotonesAdmin";
 import DashRegistroUsuarios from "../../components/DashRegistroUsuarios/DashRegistroUsuarios";
 import DashDetalleUsuarios from "../../components/DashDetalleUsuarios/DashDetalleUsuarios";
@@ -80,7 +80,7 @@ const DashboardAdmin = () => {
                         <h3>Listado de ordenes</h3>
                         <div className="botones">
                             <BotonesAdmin mode="Ver productos" />
-                            <BotonesAdmin mode="Ver todas las ordenes" />
+                            <BotonesAdmin mode="Ver ordenes" />
                         </div>
                 </div>
                 <div className="lista-ordenes">

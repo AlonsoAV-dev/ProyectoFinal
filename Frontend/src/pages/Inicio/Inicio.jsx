@@ -7,12 +7,27 @@ import arroz from "../../assets/abarrotes.png";
 import cloro from "../../assets/limpieza.png";
 import listaProductos from "../../api/productoApi.js";
 import funcionAgregarCarro from "../../components/AddToCart/AddToCart.jsx";
+import categoriasApi from "../../api/categoriaApi.js";
+import { Link } from "react-router-dom";
+
+
 function Inicio() {
   const [currentBannerSlide, setCurrentBannerSlide] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [productos, setProductos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+
+const imagenesCategorias = {
+  "Frutas y verduras": platano,
+  "Carnes, aves y pescados": carnes,
+  "Abarrotes": arroz,
+  "Limpieza": cloro,
+  "Lacteos y huevos": arroz,
+};
   const handleProductos = async () => {
     const datos = await listaProductos.findAll();
+    const categoriasDatos = await categoriasApi.findAll();
+    setCategorias(categoriasDatos);
     setProductos(datos);
   };
   useEffect(() => {
@@ -33,10 +48,7 @@ function Inicio() {
           }
     };
 
-    const handleCategoryClick = (e, categoryName) => {
-    e.preventDefault();
-    alert(`Navegando a categoría: ${categoryName}`);
-    };
+
 
     return (
     <>
@@ -48,23 +60,23 @@ function Inicio() {
         <section>
           <h2 className="section-title">Explora las categorías</h2>
           <div className="categories-grid">
-            <a href="#" className="category-item" onClick={(e) => handleCategoryClick(e, "Frutas y verduras")}>
-              <div className="category-icon"><img src={platano} alt="platanos" width="80px"/></div>
-              <div className="category-name">Frutas y verduras</div>
-            </a>
-            <a href="#" className="category-item" onClick={(e) => handleCategoryClick(e, "Carnes, aves y pescado")}>
-              <div className="category-icon"><img src={carnes} alt="Carnes" width="80px"/></div>
-              <div className="category-name">Carnes, aves y pescado</div>
-            </a>
-            <a href="#" className="category-item" onClick={(e) => handleCategoryClick(e, "Abarrotes")}>
-              <div className="category-icon"><img src={arroz} alt="Abarrotes" width="80px"/></div>
-              <div className="category-name">Abarrotes</div>
-            </a>
-            <a href="#" className="category-item" onClick={(e) => handleCategoryClick(e, "Limpieza")}>
-              <div className="category-icon"><img src={cloro} alt="Limpieza" width="80px"/></div>
-              <div className="category-name">Limpieza</div>
-            </a>
-          </div>
+  {categorias.map((categoria) => (
+    <Link
+      to={`/categorias`} // o `/categoria/${categoria.id}`
+      key={categoria.id}
+      className="category-item"
+    >
+      <div className="category-icon">
+        <img
+          src={imagenesCategorias[categoria.nombre] || cloro}
+          alt={categoria.nombre}
+          width="80px"
+        />
+      </div>
+      <div className="category-name">{categoria.nombre}</div>
+    </Link>
+  ))}
+</div>
         </section>
 
         <section>

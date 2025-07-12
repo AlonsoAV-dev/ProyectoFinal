@@ -194,7 +194,7 @@ function ListaUs() {
                                     <td className="user-info-cell">
                                         <div className="user-avatar">
                                             {user.img ? (
-                                                <img src={user.img} alt={`${user.nombre} ${user.apellido}`} />
+                                                <img className="imagen-retoque"  src={user.img} alt={`${user.nombre} ${user.apellido}`} />
                                             ) : (
                                                 generateAvatar(user.nombre, user.apellido)
                                             )}

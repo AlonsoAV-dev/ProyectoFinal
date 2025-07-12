@@ -1,18 +1,35 @@
-import "./Header.scss"
+import "./Header.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Header({ usuario, onActualizarUsuario }) {
     const navigate = useNavigate();
     const [mostrarMenuUsuario, setMostrarMenuUsuario] = useState(false);
+    const [totalCarrito, setTotalCarrito] = useState(0);
 
     const handleCerrarSesion = () => {
-        // Limpiar usuario usando la función del padre (App.jsx)
         if (onActualizarUsuario) {
             onActualizarUsuario(null);
         }
         navigate('/login');
     };
+
+    useEffect(() => {
+        const actualizarTotal = () => {
+            const resumen = JSON.parse(localStorage.getItem("resumen")) || {};
+            setTotalCarrito(resumen.total?.toFixed(2) || "0.00");
+        };
+
+        actualizarTotal();
+
+        // Escuchar cambios en el localStorage (por si cambian en otra pestaña)
+        window.addEventListener("storage", actualizarTotal);
+
+        return () => {
+            window.removeEventListener("storage", actualizarTotal);
+        };
+    }, []);
+    
     return (
         <div className="header">
             <div className="left-header">
@@ -36,7 +53,7 @@ function Header({ usuario, onActualizarUsuario }) {
                         <img src="/assets/carrito.png" alt="" className="icon-cart"/>
                         <div>
                             <p className="p-carrito">Carrito</p>
-                            <p className="p-precio">S/ 100.00</p>
+                            <p className="p-precio">S/ {totalCarrito}</p>
                         </div>
                     </div>
                 </Link>
