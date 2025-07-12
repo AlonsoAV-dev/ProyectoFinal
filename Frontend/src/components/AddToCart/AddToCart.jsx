@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import carritoApi from "../../api/carritoApi.js";
 import itemCarritoApi from "../../api/itemCarritoApi.js";
- // Asegúrate de tener este API para manejar los items del carrito
+import userApi from "../../api/usuarioApi.js"; // 
+
 const handleAddToCart = async (producto) => {
-    // 1. Obtener el ID del usuario (puede venir del contexto o estado)
-    const usuarioId = 1;
+    const usuarioId = userApi.getUserSession()?.id; // ✅ correcto
+
+    if (!usuarioId) {
+        alert("Debes iniciar sesión para agregar productos al carrito.");
+        return false;
+    }
 
     // 2. Buscar el carrito del usuario
     let carrito = await carritoApi.findByUsuario(usuarioId);
 
-    // 3. Si no tiene carrito, lo creas
-    if (!carrito) {
+    // Si no hay carrito o no tiene ID (por precaución)
+    if (!carrito || !carrito.id) {
         carrito = await carritoApi.create({ idUsuario: usuarioId });
-        console.log("carrito creado");
-        
+        console.log("✅ Carrito creado para el usuario", usuarioId);
     }
     // 3.1 Buscar todos los items del carrito
     const items = await itemCarritoApi.findByCarrito(carrito.id);
@@ -37,6 +41,7 @@ const handleAddToCart = async (producto) => {
     }
 
     console.log("Producto agregado o actualizado en el carrito");
+    return true;
     };
 
 export default handleAddToCart;

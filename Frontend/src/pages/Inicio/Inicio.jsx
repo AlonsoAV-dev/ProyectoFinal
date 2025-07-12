@@ -27,14 +27,15 @@ function Inicio() {
     const handleAddToCart = async (e, producto) => {
         e.preventDefault();
         const button = e.currentTarget;
-        await funcionAgregarCarro(producto);
-        button.textContent = 'AGREGADO ✓';
-        button.style.backgroundColor = '#4caf50';
-        
-        setTimeout(() => {
-        button.textContent = 'AGREGAR';
-        button.style.backgroundColor = '#ff6b6b';
-        }, 2000);
+        const exito = await funcionAgregarCarro(producto);
+        if (exito) {
+            button.textContent = 'AGREGADO ✓';
+            button.style.backgroundColor = '#4caf50';
+            setTimeout(() => {
+              button.textContent = 'AGREGAR';
+              button.style.backgroundColor = '#ff6b6b';
+            }, 2000);
+          }
     };
 
     const handleCategoryClick = (e, categoryName) => {

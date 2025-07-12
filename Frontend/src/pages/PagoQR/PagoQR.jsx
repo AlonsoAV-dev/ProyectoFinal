@@ -1,7 +1,7 @@
 import "./PagoQR.scss";
 import qr from "/assets/pagarQR.png";
 import { useNavigate } from "react-router-dom";
-import apiOrden from "../../api/ordenApi";
+import apiOrden from "../../api/ordenApi.js";
 import itemOrdenApi from "../../api/itemOrdenApi.js"
 const PagoQR = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const PagoQR = () => {
         estado: "Pagada",
       };
 
-      const ordenCreada = await apiOrden.create(nuevaOrden);
+      const ordenCreada = await apiOrden.crearOrden(nuevaOrden);
       console.log("✅ Orden creada:", ordenCreada); // ✅
       for (const producto of resumen.productos) {
           const item = {
@@ -36,6 +36,7 @@ const PagoQR = () => {
             cantidad: producto.cantidad,
             precioUnitario: producto.precio // o producto.precioUnitario si así lo tienes
         };
+        localStorage.setItem("ordenId", ordenCreada.id); // ✅ guarda ID de orden
 
         await itemOrdenApi.create(item);
       }

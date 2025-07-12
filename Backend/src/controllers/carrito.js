@@ -42,10 +42,10 @@ const remove = async (req, res) => {
 }
 
 const sendResults = (result, res) => {
-    if (result)
-        return res.status(200).json(result);
-    else
-        return res.status(500).json({ message: "Ha ocurrido un error!"})
+    if (result === undefined) {
+        return res.status(500).json({ message: "Ha ocurrido un error!" });
+    }
+    return res.status(200).json(result); // null también entra aquí
 }
 
 const controller = { findAll, findOne, findByUsuario, create, update, remove }

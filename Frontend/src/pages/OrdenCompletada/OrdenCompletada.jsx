@@ -4,10 +4,15 @@ import "./OrdenCompletada.scss";
 import check from "/assets/check.png"
 import delivery from  "/assets/delivery-logo.png"
 import { Link } from "react-router-dom";
-import ItemOrdenApi from "../../api/itemOrdenApi.js";
-
+import carritoApi from "../../api/carritoApi.js";
+import itemCarritoApi from "../../api/itemCarritoApi.js";
+import userApi from "../../api/usuarioApi.js";
+import itemOrdenApi from "../../api/itemOrdenApi.js";
 const OrdenCompletada = () => {
-  const usuarioId = 1; // o el que estés usando
+  const usuarioId = userApi.getUserSession()?.id; // ✅ correcto
+  const ordenId = localStorage.getItem("ordenId");
+
+
   const resumen = JSON.parse(localStorage.getItem("resumen")) || {
       subtotal: 0,
       descuento: 0,
@@ -18,6 +23,7 @@ const OrdenCompletada = () => {
   const limpiarCompra = async () => {
     localStorage.removeItem("resumen");
     localStorage.removeItem("datosEnvio");
+    localStorage.removeItem("ordenId");
 
     try {
       const carrito = await carritoApi.findByUsuario(usuarioId);
