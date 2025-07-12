@@ -1,0 +1,153 @@
+// Reutilizamos los estilos de AgregarCategoria
+.agregar-experiencia {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    width: 100%;
+    
+    h2 {
+        margin-bottom: 2rem;
+        color: #333;
+        font-size: 2rem;
+    }
+}
+
+.agregar-experiencia-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    gap: 2rem;
+}
+
+.agregar-experiencia-form {
+    display: flex;
+    width: 100%;
+    gap: 2rem;
+}
+
+.form-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        
+        label {
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        input, select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            
+            &:focus {
+                outline: none;
+                border-color: #FE624C;
+                box-shadow: 0 0 0 2px rgba(254, 98, 76, 0.1);
+            }
+        }
+        
+        select {
+            cursor: pointer;
+        }
+    }
+    
+    button[type="submit"] {
+        background-color: #FE624C;
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 1rem;
+        
+        &:hover {
+            background-color: #e5563e;
+        }
+        
+        &:active {
+            transform: translateY(1px);
+        }
+    }
+}
+
+.form-image {
+    flex: 1;
+    
+    .file-upload-container {
+        border: 2px dashed #ddd;
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s ease;
+        
+        &:hover {
+            border-color: #FE624C;
+        }
+        
+        input[type="file"] {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+            cursor: pointer;
+        }
+        
+        .file-upload-text {
+            display: block;
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        p {
+            margin: 0.5rem 0;
+            color: #999;
+        }
+        
+        .file-upload-button {
+            background-color: #FE624C;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            
+            &:hover {
+                background-color: #e5563e;
+            }
+        }
+    }
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .agregar-experiencia-container {
+        flex-direction: column;
+    }
+    
+    .agregar-experiencia-form {
+        flex-direction: column;
+    }
+    
+    .form-info, .form-image {
+        flex: none;
+        width: 100%;
+    }
+} 

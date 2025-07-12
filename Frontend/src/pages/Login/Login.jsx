@@ -1,28 +1,43 @@
 import "./Login.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useState } from "react";
+import usuarioApi from "../../api/usuarioApi";
 
-function Login() {
+function Login({ onActualizarUsuario }) {
   const navigate = useNavigate();
-  const correoRef = useRef();
-  const passwordRef = useRef();
+  const [correo, setCorreo] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const logicalogin = () => {
-    const correo = correoRef.current.value.trim();
-    const password = passwordRef.current.value.trim();
-
-    if (correo === "" && password==="") {
-      alert("Por favor, completa todos los campos.");
+  const logicalogin = async (e) => {
+    e.preventDefault();
+    
+    if (!correo.trim() || !password.trim()) {
+      setError("Por favor, completa todos los campos.");
       return;
     }
 
-    const correoValido = "andrewhuancaya@gmail.com";
-    const passwordValida = "andrew30";
-
-    if (correo === correoValido && password === passwordValida) {
+    try {
+      setLoading(true);
+      setError("");
+      
+     
+      const usuario = await usuarioApi.login(correo, password);
+      
+      
+      if (onActualizarUsuario) {
+        onActualizarUsuario(usuario);
+      }
+      
+     
       navigate("/pagina-principal");
-    } else {
-      alert("Correo o contraseña incorrectos.");
+      
+    } catch (error) {
+      console.error('Error en login:', error);
+      setError(error.message || "Error al iniciar sesión");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,21 +48,32 @@ function Login() {
 
         <div className="correo">
           <p>Correo</p>
-          <input ref={correoRef} type="text" placeholder="usuario@gmail.com" />
+          <input 
+            type="email" 
+            placeholder="usuario@gmail.com"
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
+          />
         </div>
 
         <div className="password">
           <p>Contraseña</p>
           <input
-            ref={passwordRef}
             type="password"
             placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
-        <button className="bot Iniciar Sesion" onClick={logicalogin}>
-          Iniciar sesión
+        <button 
+          onClick={logicalogin}
+          className="bot-Iniciar-Sesion"
+        >
+          {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
         </button>
+
+        {error && <p style={{color: 'red', textAlign: 'center', marginTop: '10px'}}>{error}</p>}
 
         <div className="enlaces">
           <Link to="/registro" className="registro">

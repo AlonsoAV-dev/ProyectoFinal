@@ -32,7 +32,7 @@ function DetalleUs() {
             });
         }
 
-        // Event listeners para la paginación
+        
         document.querySelectorAll('.pagination button[data-page]').forEach(btn => {
             btn.addEventListener('click', () => {
                 currentPage = parseInt(btn.dataset.page);
@@ -40,7 +40,7 @@ function DetalleUs() {
             });
         });
 
-        // Animación de entrada suave
+        
         window.addEventListener('load', () => {
             const elements = document.querySelectorAll('.user-details-card, .orders-section');
             elements.forEach((el, index) => {

@@ -5,7 +5,7 @@ import SubirImagen from "../SubirImagen/SubirImagen";
 import agregarImg from "../../../../public/assets/agregar.png"
 import { Link } from "react-router-dom";
 
-const FormProduct = ({ onSubmit, modo , producto = {}, iconoImg }) => {
+const FormProduct = ({ onSubmit, modo , producto = {}, iconoImg, categorias = [] }) => {
   return (
     <div className="contenedor-main">
       <div className="agregarProducto">
@@ -45,10 +45,12 @@ const FormProduct = ({ onSubmit, modo , producto = {}, iconoImg }) => {
                     defaultValue={producto.categoria || ""}                      
                     disabled={modo === "Detalle Producto"}                    
                         >    
-                        <option className="texto-categoria" >{modo === "Detalle Producto" || "EditarProducto"? producto.categoria : "Seleccione la categoría del producto" }</option>
-                        <option value="Frutas y verduras">Frutas y verduras</option>
-                        <option value="Lacteos y huevos">Lacteos y huevos</option>
-                        <option value="Carnes, aves y pescados">Carnes, aves y pescados</option>
+                        <option className="texto-categoria" value="">{modo === "Detalle Producto" ? producto.categoria : "Seleccione la categoría del producto" }</option>
+                        {categorias.map((categoria) => (
+                          <option key={categoria.id} value={categoria.nombre}>
+                            {categoria.nombre}
+                          </option>
+                        ))}
                     </select>
                 </FormGroup>
 
