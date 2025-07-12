@@ -1,5 +1,4 @@
 import "./Header.scss"
-<<<<<<< HEAD
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -14,15 +13,6 @@ function Header({ usuario, onActualizarUsuario }) {
         }
         navigate('/login');
     };
-=======
-import { Link } from "react-router-dom";
-import carritoApi from "../../api/carritoApi.js";
-function Header() {
-    const usuarioId = 1; // Cambia esto según tu lógica de usuario
-    
-
-
->>>>>>> origin/AlonsoAV-dev
     return (
         <div className="header">
             <div className="left-header">

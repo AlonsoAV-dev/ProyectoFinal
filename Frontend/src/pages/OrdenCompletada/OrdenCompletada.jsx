@@ -32,14 +32,7 @@ const OrdenCompletada = () => {
       console.error("❌ Error limpiando el carrito:", error);
     }
   };
-<<<<<<< HEAD
-  
-  // Obtener ID de orden si está disponible
-  const ordenId = localStorage.getItem("ultimaOrdenId") || null;
-  // Podrías guardar esta info al confirmar pago
-=======
   const datosEnvio = JSON.parse(localStorage.getItem("datosEnvio")) || {};
->>>>>>> origin/AlonsoAV-dev
   const direccion = {
       direccion: datosEnvio.direccion || "No definida",
       ciudad: `${datosEnvio.ciudad || ""} - ${datosEnvio.departamento || ""}`,
@@ -102,25 +95,8 @@ const OrdenCompletada = () => {
             <p>Fecha de entrega aproximada:<b> {direccion.entrega}</b></p>
           </div>
           <div className="boton-ofertas">
-<<<<<<< HEAD
-            {ordenId && (
-              <Link to={`/orden/${ordenId}`} style={{ marginRight: '10px' }}>
-                <button style={{ backgroundColor: '#007bff', marginRight: '10px' }}>
-                  Ver detalles de la orden
-                </button>
-              </Link>
-            )}
-            <Link to={"/ "} >
-              <button onClick={() => {
-                localStorage.removeItem("resumen");
-                localStorage.removeItem("ultimaOrdenId");
-              }}>
-                Ver más ofertas
-              </button>
-=======
               <Link to={"/ "} >
               <button onClick={limpiarCompra}>Ver más ofertas</button>
->>>>>>> origin/AlonsoAV-dev
             </Link>
           </div>
         </div>

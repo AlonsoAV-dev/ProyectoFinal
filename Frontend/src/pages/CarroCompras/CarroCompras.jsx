@@ -7,11 +7,7 @@ import itemCarritoApi from "../../api/itemCarritoApi.js";
 import productosApi from "../../api/productoApi.js";
 
 const CarroCompras = () => {
-<<<<<<< HEAD
-    const usuarioId = 1;   // LINEA USUARIO
-=======
     const usuarioId = 1;
->>>>>>> origin/AlonsoAV-dev
     const [itemCarrito, setItemCarrito] = useState([]);
     const [productosEnCarrito, setProductosEnCarrito] = useState([]);
 
