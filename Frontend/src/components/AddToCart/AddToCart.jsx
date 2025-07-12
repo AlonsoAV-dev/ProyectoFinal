@@ -4,7 +4,7 @@ import itemCarritoApi from "../../api/itemCarritoApi.js";
  // Asegúrate de tener este API para manejar los items del carrito
 const handleAddToCart = async (producto) => {
     // 1. Obtener el ID del usuario (puede venir del contexto o estado)
-    const usuarioId = 15;
+    const usuarioId = 1;
 
     // 2. Buscar el carrito del usuario
     let carrito = await carritoApi.findByUsuario(usuarioId);
@@ -12,6 +12,8 @@ const handleAddToCart = async (producto) => {
     // 3. Si no tiene carrito, lo creas
     if (!carrito) {
         carrito = await carritoApi.create({ idUsuario: usuarioId });
+        console.log("carrito creado");
+        
     }
     // 3.1 Buscar todos los items del carrito
     const items = await itemCarritoApi.findByCarrito(carrito.id);
