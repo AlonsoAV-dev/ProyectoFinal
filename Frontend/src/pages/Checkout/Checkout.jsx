@@ -1,16 +1,17 @@
 import ResumenCompra from "../CarroCompras/ResumenCompra";
 import "./Checkout.scss";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import userApi from "../../api/usuarioApi.js";
 
 const Checkout = () => {
   const [datosEnvio, setDatosEnvio] = useState(null);
+    const usuarioId = userApi.getUserSession()?.id; // ✅ correcto
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const datos = {
-      idUsuario: 1, // o cámbialo según el usuario logueado
+      idUsuario: usuarioId, // o cámbialo según el usuario logueado
       nombre: e.target.nombre.value,
       apellido: e.target.apellido.value,
       ciudad: e.target.ciudad.value,

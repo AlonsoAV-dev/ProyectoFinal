@@ -1,7 +1,7 @@
 import deleteImg from "../../../public/assets/delete2.png";
 import "./ProductosCarrito.scss"
 
-const ProductoCarrito = ({ producto, cantidad, cambiarCantidad, soloLectura = false }) => {
+const ProductoCarrito = ({ producto, cantidad, cambiarCantidad, soloLectura = false, eliminarItem  }) => {
   return (
     <div className="descripcion-compra">
       <button className="boton-check">✔</button>
@@ -26,7 +26,12 @@ const ProductoCarrito = ({ producto, cantidad, cambiarCantidad, soloLectura = fa
               disabled={cantidad === 1}
               className="operacion"
             >-</button>
-            <img src={deleteImg} alt="eliminar" className="eliminar"  />
+            <img
+              src={deleteImg}
+              alt="eliminar"
+              className="eliminar"
+              onClick={eliminarItem}
+            />
           </div>
         )}
       </div>
