@@ -13,11 +13,11 @@ export const getUsuario = () => {
 export const updateUsuario = (nuevosDatos) => {
     
     usuarioSingleton = {
-        ...usuarioSingleton, // Mantiene campos no editables como fecha_registro
+        ...usuarioSingleton, 
         nombre: nuevosDatos.nombre !== undefined ? nuevosDatos.nombre : usuarioSingleton.nombre,
         apellido: nuevosDatos.apellido !== undefined ? nuevosDatos.apellido : usuarioSingleton.apellido,
         correo: nuevosDatos.correo !== undefined ? nuevosDatos.correo : usuarioSingleton.correo,
     };
     console.log("Datos de usuario actualizados en api/usuarioData.js:", usuarioSingleton);
-    return { ...usuarioSingleton }; // Devuelve una copia de los datos actualizados
+    return { ...usuarioSingleton }; 
 }; 

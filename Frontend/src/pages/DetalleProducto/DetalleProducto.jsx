@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import productosApi from "../../api/productoApi.js";
 import { useState, useEffect } from "react";
 
-const DetalleProducto = () => {
+const DetalleProducto = ({categorias}) => {
 
     const {id} = useParams();
     const [productoEncontrado, setProductoEncontrado] = useState(null);
@@ -38,7 +38,7 @@ const DetalleProducto = () => {
     }
     return (
         <>   
-        <FormProduct onSubmit={detalleProducto} modo={modo} iconoImg={productoEncontrado.imagen} producto={productoEncontrado} />         
+        <FormProduct onSubmit={detalleProducto} modo={modo} iconoImg={productoEncontrado.imagen} producto={productoEncontrado} categorias={categorias} />         
 
        </> 
     );

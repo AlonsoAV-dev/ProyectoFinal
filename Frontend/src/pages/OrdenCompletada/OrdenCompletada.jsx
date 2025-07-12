@@ -4,21 +4,52 @@ import "./OrdenCompletada.scss";
 import check from "/assets/check.png"
 import delivery from  "/assets/delivery-logo.png"
 import { Link } from "react-router-dom";
+import carritoApi from "../../api/carritoApi.js";
+import itemCarritoApi from "../../api/itemCarritoApi.js";
+import userApi from "../../api/usuarioApi.js";
+import itemOrdenApi from "../../api/itemOrdenApi.js";
 const OrdenCompletada = () => {
+  const usuarioId = userApi.getUserSession()?.id; // ✅ correcto
+  const ordenId = localStorage.getItem("ordenId");
+
+
   const resumen = JSON.parse(localStorage.getItem("resumen")) || {
-    subtotal: 0,
-    descuento: 0,
-    total: 0,
-    cantidadTotal: 0,
-    productos: []
+      subtotal: 0,
+      descuento: 0,
+      total: 0,
+      cantidadTotal: 0,
+      productos: []
+    };
+  const limpiarCompra = async () => {
+    localStorage.removeItem("resumen");
+    localStorage.removeItem("datosEnvio");
+    localStorage.removeItem("ordenId");
+
+    try {
+      const carrito = await carritoApi.findByUsuario(usuarioId);
+      if (!carrito) return;
+
+      const items = await itemCarritoApi.findByCarrito(carrito.id);
+
+      for (const item of items) {
+        await itemCarritoApi.remove(item.id);
+      }
+    } catch (error) {
+      console.error("❌ Error limpiando el carrito:", error);
+    }
   };
-  // Podrías guardar esta info al confirmar pago
+  const datosEnvio = JSON.parse(localStorage.getItem("datosEnvio")) || {};
   const direccion = {
-    direccion: "Av la molina 12334",
-    ciudad: "Lima - Lima",
-    celular: "990892131",
-    entrega: "04/05/2025"
+      direccion: datosEnvio.direccion || "No definida",
+      ciudad: `${datosEnvio.ciudad || ""} - ${datosEnvio.departamento || ""}`,
+      celular: datosEnvio.telefono || "No definido",
+      entrega: new Date().toLocaleDateString("es-PE", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+      })
   };
+
 
   return (
     <div className="orden-completada">
@@ -26,6 +57,11 @@ const OrdenCompletada = () => {
         <div className="contenedor-titulo">
           <h1>Orden completada 😁 </h1>
           <p>Gracias por tu compra!</p>
+          {ordenId && (
+            <p style={{ marginTop: '10px', color: '#666', fontSize: '14px' }}>
+              Número de orden: <strong>#{ordenId}</strong>
+            </p>
+          )}
         </div>
         <img src={check} alt="" />
       </div>
@@ -66,9 +102,9 @@ const OrdenCompletada = () => {
           </div>
           <div className="boton-ofertas">
               <Link to={"/ "} >
-            <button onClick={() => localStorage.removeItem("resumen")}>Ver más ofertas</button>
+              <button onClick={limpiarCompra}>Ver más ofertas</button>
             </Link>
-            </div>
+          </div>
         </div>
       </div>
     </div>

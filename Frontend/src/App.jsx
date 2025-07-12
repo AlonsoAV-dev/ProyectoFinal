@@ -5,7 +5,7 @@ import Navbar from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import Login from './pages/Login/Login'
 import apis from './api/ProductosApi'
-import { getUsuario, updateUsuario } from './api/usuarioData'
+import usuarioApi from './api/usuarioApi'
 import { useState, useEffect } from 'react'
 import AgregarProducto from './pages/AgregarProducto/AgregarProducto'
 import EditarProducto from './pages/EditarProducto/EditarProducto'
@@ -13,6 +13,7 @@ import DashboardAdmin from './pages/DashboardAdmin/DashboardAdmin'
 import CarroCompras from './pages/CarroCompras/CarroCompras'
 import TablaProductos from './components/TablaProductos/TablaProductos'
 import AgregarCategoria from './pages/AgregarCategoria/AgregarCategoria'
+import EditarCategoria from './pages/EditarCategoria/EditarCategoria'
 import ViewProducts from './pages/ViewProducts/ViewProducts'
 import Register from './pages/Register/Register'
 import Password from './pages/Password/Password'
@@ -42,48 +43,96 @@ import PagoTarjeta from './pages/PagoTarjeta/PagoTarjeta'
 import OrdenCompletada from './pages/OrdenCompletada/OrdenCompletada'
 import Categorias from './pages/Categorias/Categorias'
 import ListaOrd from './pages/ListaOrd/ListaOrd'
+import categoriaApi from './api/categoriaApi'
+import productosApi from './api/productoApi'
 
 function App() {
   
-  const productosApi= apis.productoApi;
+  const productosApiLocal = apis.productoApi;
 
   const [lista_productos, setLista_Productos] = useState(() => {
-    return productosApi.obtenerProductos();
+    return productosApiLocal.obtenerProductos();
   });
 
-  const [lista_categorias, setListaCategorias] = useState(() => {
-    return productosApi.obtenerCategorias();
-  })
+  const [lista_categorias, setListaCategorias] = useState([]);
 
-  const [usuarioActual, setUsuarioActual] = useState(() => getUsuario());
+  const [usuarioActual, setUsuarioActual] = useState(() => usuarioApi.getUserSession());
 
-  const handleUpdateUsuario = (datosNuevosDelFormulario) => {
-    const usuarioActualizadoDesdeApi = updateUsuario(datosNuevosDelFormulario);
-    setUsuarioActual(usuarioActualizadoDesdeApi);
+  // Función para cargar categorías desde la API real
+  const cargarCategorias = async () => {
+    try {
+      const categorias = await categoriaApi.obtenerCategoriasActivas();
+      setListaCategorias(categorias);
+    } catch (error) {
+      console.error('Error al cargar categorías:', error);
+      // Fallback a categorías por defecto si hay error
+      setListaCategorias([]);
+    }
   };
 
+  // Función para actualizar el usuario (login/logout/cambios)
+  const actualizarUsuario = (nuevoUsuario) => {
+    setUsuarioActual(nuevoUsuario);
+    if (nuevoUsuario) {
+      usuarioApi.saveUserSession(nuevoUsuario);
+    } else {
+      usuarioApi.clearUserSession();
+    }
+  };
+
+  const handleUpdateUsuario = async (datosNuevosDelFormulario) => {
+    try {
+      if (usuarioActual && usuarioActual.id) {
+        const usuarioActualizado = await usuarioApi.updateProfile(usuarioActual.id, datosNuevosDelFormulario);
+        
+        // Actualizar usuario usando la función centralizada
+        actualizarUsuario(usuarioActualizado);
+        
+        return usuarioActualizado;
+      }
+    } catch (error) {
+      console.error('Error al actualizar usuario:', error);
+      throw error;
+    }
+  };
+
+  // Efecto para manejar cambios en la sesión y cargar datos iniciales
   useEffect(() => {
-    productosApi.guardarProductos(lista_productos);
+    // Verificar si hay una sesión válida al cargar la app
+    const sesionUsuario = usuarioApi.getUserSession();
+    if (sesionUsuario && sesionUsuario !== usuarioActual) {
+      setUsuarioActual(sesionUsuario);
+    }
+    
+    // Cargar categorías desde la API real
+    cargarCategorias();
+  }, []);
+
+  useEffect(() => {
+    productosApiLocal.guardarProductos(lista_productos);
   }, [lista_productos]);
 
     return (
     <>
       <BrowserRouter>
-        <Header/>
+        <Header usuario={usuarioActual} onActualizarUsuario={actualizarUsuario}/>
         <Navbar/>
         <Routes>
-          <Route path="/" element={<Inicio />} /> 
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Inicio categorias={lista_categorias} />} /> 
+          <Route path="/login" element={<Login onActualizarUsuario={actualizarUsuario} />} />
           <Route path="/productos" element={<TablaProductos/>} />
-          <Route path="/agregar" element={<AgregarProducto  />} />
-          <Route path="/editar/:id" element={<EditarProducto />} />
-          <Route path="/carrito" element={<CarroCompras />}/>
+          <Route path="/agregar" element={<AgregarProducto categorias={lista_categorias} />} />
+          <Route path="/editar/:id" element={<EditarProducto categorias={lista_categorias} />} />
+          <Route path="/carrito" element={<CarroCompras lista_productos={lista_productos} setLista_Productos={setLista_Productos}/>}/>
           <Route path="/agregar-categoria" element={<AgregarCategoria categorias={lista_categorias} setCategorias={setListaCategorias}/>}/>
-          <Route path="/Detalle-producto-admin/:id" element={<DetalleProducto />}/>
+          <Route path="/editar-categoria/:id" element={<EditarCategoria />}/>
+          <Route path="/categorias" element={<Categorias categorias={lista_categorias} />}/>
+          <Route path="/Detalle-producto-admin/:id" element={<DetalleProducto categorias={lista_categorias} />}/>
           <Route path="/dashboard" element={<DashboardAdmin/>} />
           <Route path="/registro" element={<Register />} />
           <Route path="/olvide-contraseña" element={<Password />} />
           <Route path="/orden/:idOrden" element={<DetalleOrd />} />
+          <Route path="/lista-ordenes" element={<ListaOrd />} />
           <Route path="/detail-user" element={<DetalleUs />} />
           <Route path="/list-users" element={<ListaUs />} />
           <Route path="/detail-product" element={<DetalleP />} />

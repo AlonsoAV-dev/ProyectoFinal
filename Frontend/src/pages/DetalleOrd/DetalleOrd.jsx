@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./DetalleOrd.scss";
 import productoApi from "../../api/productoApi"; // Ajusta la ruta según tu estructura
 import ordenApi from "../../api/ordenApi"; 
@@ -51,7 +52,7 @@ function DetalleOrd({ ordenId }) {
     }
   }, [ordenId]);
 
-  // Animación de entrada suave
+  // Cargar datos de la orden desde la API
   useEffect(() => {
     if (!loading && products.length > 0) {
       const rows = document.querySelectorAll('.product-row');

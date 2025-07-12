@@ -5,9 +5,9 @@ import ProductoCarrito from "../ProductosCarrito/ProductosCarrito";
 import carritoApi from "../../api/carritoApi.js";
 import itemCarritoApi from "../../api/itemCarritoApi.js";
 import productosApi from "../../api/productoApi.js";
-
+import userApi from "../../api/usuarioApi.js"; 
 const CarroCompras = () => {
-    const usuarioId = 1;
+    const usuarioId = userApi.getUserSession()?.id; // ✅ correcto
     const [itemCarrito, setItemCarrito] = useState([]);
     const [productosEnCarrito, setProductosEnCarrito] = useState([]);
 
@@ -28,7 +28,7 @@ const CarroCompras = () => {
                 return {
                     ...producto,
                     cantidad: item.cantidad,
-                    idItemCarrito: item.id // importante para update
+                    idItemCarrito: item.id 
                 };
             })
         );
@@ -48,7 +48,6 @@ const CarroCompras = () => {
         const nuevosProductos = productosEnCarrito.map((p) => {
             if (p.id === idProducto) {
                 const nuevaCantidad = Math.max(p.cantidad + op, 1);
-                // Actualiza backend
                 itemCarritoApi.update({
                     id: idItemCarrito,
                     cantidad: nuevaCantidad
@@ -60,7 +59,13 @@ const CarroCompras = () => {
 
         setProductosEnCarrito(nuevosProductos);
     };
+    const eliminarProducto = async (idItemCarrito) => {
+        await itemCarritoApi.remove(idItemCarrito);
 
+        // Actualiza el estado local quitando ese producto
+        const nuevosProductos = productosEnCarrito.filter(p => p.idItemCarrito !== idItemCarrito);
+        setProductosEnCarrito(nuevosProductos);
+    };
     const subtotal = productosEnCarrito.reduce((suma, producto) => {
         return suma + producto.precio * producto.cantidad;
     }, 0);
@@ -71,7 +76,7 @@ const CarroCompras = () => {
 
     const descuento = subtotal * 0.10;
     const total = subtotal - descuento;
-
+    
     localStorage.setItem("resumen", JSON.stringify({
         subtotal,
         descuento,
@@ -88,22 +93,28 @@ const CarroCompras = () => {
                     <p>({cantidadTotal} productos)</p>
                 </div>
 
-                <div className="productos-carrito">
-                    {productosEnCarrito.map((producto) => (
+               <div className={`productos-carrito ${productosEnCarrito.length === 0 ? 'vacio' : ''}`}>
+                    {productosEnCarrito.length === 0 ? (
+                        <p className="carrito-vacio">Tu carrito está vacío 🛒</p>
+                    ) : (
+                        productosEnCarrito.map((producto) => (
                         <ProductoCarrito
                             key={producto.id}
                             producto={producto}
                             cantidad={producto.cantidad}
                             cambiarCantidad={(op) =>
-                                cambiarCantidad(producto.idItemCarrito, producto.id, op)
+                            cambiarCantidad(producto.idItemCarrito, producto.id, op)
                             }
+                            eliminarItem={() => eliminarProducto(producto.idItemCarrito)} // ✅
                             soloLectura={false}
                         />
-                    ))}
-                </div>
+                        ))
+                    )}
+                    </div>
+
             </div>
 
-            <ResumenCompra modo="Continuar compra" />
+            {productosEnCarrito.length > 0 && <ResumenCompra modo="Continuar compra" />}
         </div>
     );
 };

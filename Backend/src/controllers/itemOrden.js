@@ -1,4 +1,4 @@
-import repository from "../repositories/users.js";
+import repository from "../repositories/itemOrden.js";
 
 const findAll = async (req, res) => {
     const result = await repository.findAll();
@@ -15,19 +15,6 @@ const findOne = async (req, res) => {
 
 const create = async (req, res) => {
     const payload = req.body;
-    
-    
-    if (!payload.nombreDeUsuario) {
-        const baseUsername = `${payload.nombre}${payload.apellido}`.toLowerCase().replace(/\s+/g, '');
-        const timestamp = Date.now().toString().slice(-4); 
-        payload.nombreDeUsuario = `${baseUsername}${timestamp}`;
-    }
-    
-    
-    if (!payload.fechaRegistro) {
-        payload.fechaRegistro = new Date().toISOString().split('T')[0];
-    }
-    
     const result = await repository.create(payload);
 
     return sendResults(result,res)
@@ -58,3 +45,4 @@ const sendResults = (result, res) => {
 const controller = { findAll, findOne, create, update, remove }
 
 export default controller;
+

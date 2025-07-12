@@ -9,7 +9,7 @@ const DashDetalleUsuarios = ({usuario}) =>{
     const [lista_pedidos, setListaPedidos] = useState([]);
     
     const handlePedidos = async () => {
-        const datos = await pedidosApi.findByUsuario(user.id);
+        const datos = await pedidosApi.obtenerOrdenesPorUsuario(user.id);
         setListaPedidos(datos);
     }
     useEffect(() => {

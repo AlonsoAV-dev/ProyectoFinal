@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import FormProduct from "../../components/FormularioProductos/FormProduct/FormProduct"
 import { useState, useEffect } from "react";
 import productosApi from "../../api/productoApi"; // Asegúrate de que la ruta sea correcta
-const EditarProducto = () => {
+const EditarProducto = ({categorias}) => {
 
     const {id} = useParams();
     
@@ -45,7 +45,7 @@ const EditarProducto = () => {
 
     return (
         <>
-            <FormProduct onSubmit={editarProducto} modo={modo} iconoImg={iconoImg} producto={productoEncontrado} />         
+            <FormProduct onSubmit={editarProducto} modo={modo} iconoImg={iconoImg} producto={productoEncontrado} categorias={categorias} />         
         </>
     )
 }

@@ -3,7 +3,7 @@ import FormProduct from "../../components/FormularioProductos/FormProduct/FormPr
 import iconoImg from "../../../public/assets/icono-img.png"
 import productosApi from "../../api/productoApi.js";
 
-const AgregarProducto = () => {
+const AgregarProducto = ({categorias}) => {
     
     const productoObjeto = {
         nombre: "",
@@ -39,7 +39,7 @@ const AgregarProducto = () => {
     }
 
     return (
-        <FormProduct onSubmit={agregarProducto} modo ={"AgregarProducto"} iconoImg= {iconoImg}/>
+        <FormProduct onSubmit={agregarProducto} modo ={"AgregarProducto"} iconoImg= {iconoImg} categorias={categorias}/>
     );
 };
 

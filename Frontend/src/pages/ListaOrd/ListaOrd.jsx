@@ -55,7 +55,53 @@ function ListaOrd() {
         fetchData();
     }, []);
 
-    // Buscar órdenes
+    
+    useEffect(() => {
+        cargarOrdenes();
+    }, []);
+
+    const cargarOrdenes = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            
+            const resultado = await ordenApi.findAll();
+            
+            if (Array.isArray(resultado)) {
+               
+                const ordenesFormateadas = resultado.map(orden => ({
+                    id: `#${orden.id}`,
+                    originalId: orden.id,
+                    user: `Usuario ${orden.idUsuario}`,
+                    date: new Date(orden.fecha).toLocaleDateString('es-ES'),
+                    total: `S/${orden.total}`,
+                    status: orden.estado.toLowerCase() === 'entregado' ? 'entregado' : 'por entregar',
+                    originalStatus: orden.estado
+                }));
+                
+                setOrders(ordenesFormateadas);
+                setFilteredOrders(ordenesFormateadas);
+            } else {
+                setError('Error al cargar órdenes desde el servidor');
+            }
+        } catch (error) {
+            setError('Error de conexión con el servidor');
+            console.error('Error al cargar órdenes:', error);
+            
+            
+            const dummyOrders = [
+                { id: '#1234', user: 'Juan Perez', date: '20/01/2025', total: 'S/199.00', status: 'entregado' },
+                { id: '#1235', user: 'Maria Gonzales', date: '20/01/2025', total: 'S/159.00', status: 'por entregar' },
+                { id: '#1236', user: 'Marco Aurelio', date: '19/01/2025', total: 'S/289.00', status: 'entregado' }
+            ];
+            setOrders(dummyOrders);
+            setFilteredOrders(dummyOrders);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    
     const searchOrders = () => {
         if (searchTerm === '') {
             setFilteredOrders([...orders]);
@@ -111,7 +157,7 @@ function ListaOrd() {
         }
     };
 
-    // Paginación
+    
     const previousPage = () => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
     };
@@ -213,7 +259,7 @@ function ListaOrd() {
         return buttons;
     };
 
-    // Efecto para búsqueda
+    
     useEffect(() => {
         if (orders.length > 0) {
             searchOrders();

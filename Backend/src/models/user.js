@@ -17,15 +17,15 @@ const user = sequelize.define('user', {
     },
     direccion: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true, 
     },
     ciudad: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true, 
     },
     telefono: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true, 
     },
     correo: {
       type: DataTypes.STRING,
@@ -37,9 +37,14 @@ const user = sequelize.define('user', {
     },
     nombreDeUsuario: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
       field: 'nombredeusuario'
+    },
+    dni: {
+      type: DataTypes.STRING,
+      allowNull: false, 
+      unique: true
     },
     password: {
       type: DataTypes.STRING,

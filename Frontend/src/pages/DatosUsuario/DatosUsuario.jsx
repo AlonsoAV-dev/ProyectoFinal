@@ -14,7 +14,7 @@ function DatosUsuario({ usuarioOriginal, onGuardarCambios }) {
         if (usuarioOriginal) {
             setNombre(usuarioOriginal.nombre || '');
             setApellido(usuarioOriginal.apellido || '');
-            setCorreo(usuarioOriginal.correo || '');
+            setCorreo(usuarioOriginal.email || usuarioOriginal.correo || ''); // Soportar ambos campos
             setIsLoading(false);
         } else {
             // Manejar caso de que usuarioOriginal no esté definido inicialmente
@@ -22,7 +22,7 @@ function DatosUsuario({ usuarioOriginal, onGuardarCambios }) {
         }
     }, [usuarioOriginal]);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!nombre.trim() || !apellido.trim() || !correo.trim()) {
             Swal.fire('Campos incompletos', 'Por favor, completa todos los campos.', 'error');
@@ -33,15 +33,24 @@ function DatosUsuario({ usuarioOriginal, onGuardarCambios }) {
             return;
         }
 
-        // Llama a la función de App.jsx para actualizar los datos en la "API" y en App
-        onGuardarCambios({ 
-            nombre: nombre.trim(), 
-            apellido: apellido.trim(), 
-            correo: correo.trim() 
-        });
+        try {
+            setIsLoading(true);
+            
+            // Llama a la función de App.jsx para actualizar los datos en la API
+            await onGuardarCambios({ 
+                nombre: nombre.trim(), 
+                apellido: apellido.trim(), 
+                email: correo.trim() // Cambiar 'correo' por 'email' para consistencia con API
+            });
 
-        Swal.fire('¡Datos Actualizados!', 'Tu información ha sido actualizada correctamente.', 'success');
-        setIsEditing(false);
+            Swal.fire('¡Datos Actualizados!', 'Tu información ha sido actualizada correctamente.', 'success');
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Error al actualizar datos:', error);
+            Swal.fire('Error', error.message || 'Error al actualizar los datos', 'error');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleCancelEdit = () => {
@@ -49,7 +58,7 @@ function DatosUsuario({ usuarioOriginal, onGuardarCambios }) {
         if (usuarioOriginal) {
             setNombre(usuarioOriginal.nombre || '');
             setApellido(usuarioOriginal.apellido || '');
-            setCorreo(usuarioOriginal.correo || '');
+            setCorreo(usuarioOriginal.email || usuarioOriginal.correo || ''); // Soportar ambos campos
         }
         setIsEditing(false);
     };

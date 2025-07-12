@@ -10,9 +10,11 @@ const remove = async (id) => await base.remove(`${endpoint}/${id}`);  // Método
 const findOne = async (id) => await base.get(`${endpoint}/${id}`);
 
 
+
 const obtenerCategorias = async () => {
     try {
         const categorias = await findAll();
+        // El backend puede devolver { value: [...] } como otros endpoints
         return categorias?.value || categorias || [];
     } catch (error) {
         console.error('Error al obtener categorías:', error);
@@ -74,7 +76,7 @@ const api = {
     findAll, 
     create, 
     update, 
-    remove,
+    remove,  // Ahora incluido en la exportación
     findOne,
     obtenerCategorias,
     obtenerCategoriasActivas,
