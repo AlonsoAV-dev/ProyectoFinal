@@ -8,13 +8,13 @@ function PaginaPrincipal({ usuario }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Datos de envío del usuario (desde la base de datos)
+    
     const direnvio = {
         direccion: usuario?.direccion || 'No especificada',
         telefonocontacto: usuario?.telefono || 'No especificado'
     };
 
-    // Cargar órdenes del usuario actual
+    
     useEffect(() => {
         if (usuario && usuario.id) {
             cargarOrdenesUsuario();
@@ -26,11 +26,11 @@ function PaginaPrincipal({ usuario }) {
             setLoading(true);
             setError(null);
             
-            // Obtener órdenes del usuario específico
+           
             const ordenesUsuario = await ordenApi.obtenerOrdenesPorUsuario(usuario.id);
             
             if (Array.isArray(ordenesUsuario)) {
-                // Formatear datos para el componente (mantener estructura original)
+              
                 const ordenesFormateadas = ordenesUsuario.map(orden => ({
                     id: orden.id,
                     usuario: `${usuario.nombre} ${usuario.apellido}`,
@@ -56,7 +56,7 @@ function PaginaPrincipal({ usuario }) {
     const [terminoBusqueda, setTerminoBusqueda] = useState('');
     const [ordenesFiltradas, setOrdenesFiltradas] = useState([]);
 
-    // Filtrar órdenes por búsqueda
+   
     useEffect(() => {
         if (!terminoBusqueda.trim()) {
             setOrdenesFiltradas(ordenes);
@@ -83,8 +83,7 @@ function PaginaPrincipal({ usuario }) {
     };
 
     const buscarOrden = () => {
-        // La búsqueda se hace automáticamente con el useEffect
-        // Este método puede usarse para lógica adicional si se necesita
+        
     };
 
 

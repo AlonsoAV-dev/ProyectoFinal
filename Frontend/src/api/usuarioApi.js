@@ -3,39 +3,39 @@ import base from './base.js'
 const endpoint = 'users'
 const API_BASE_URL = 'http://localhost:3001'
 
-// CRUD básico
+
 const findAll = async () => await base.get(endpoint);
 const create = async (payload) => await base.post(endpoint, payload);
 const update = async (payload) => await base.put(endpoint, payload);
 const remove = async (id) => await base.remove(`${endpoint}/${id}`);
 const findOne = async (id) => await base.get(`${endpoint}/${id}`);
 
-// Funciones de autenticación
+
 const login = async (email, password) => {
     try {
-        // Obtener todos los usuarios para buscar el email
+        
         const response = await findAll();
         
-        // El backend regresa { value: [...], Count: n }
+        
         const usuarios = response?.value || response;
         
         if (!Array.isArray(usuarios)) {
             throw new Error('Error al obtener usuarios del servidor');
         }
         
-        // Buscar usuario por correo (no email)
+        
         const usuario = usuarios.find(u => u.correo === email);
         
         if (!usuario) {
             throw new Error('Usuario no encontrado');
         }
         
-        // Verificar contraseña (simple verificación - en producción debería usar hash)
+        
         if (usuario.password !== password) {
             throw new Error('Contraseña incorrecta');
         }
         
-        // Retornar usuario sin contraseña
+       
         const { password: _, ...usuarioSinPassword } = usuario;
         return usuarioSinPassword;
         
@@ -47,7 +47,6 @@ const login = async (email, password) => {
 
 const register = async (userData) => {
     try {
-        // Verificar que no exista usuario con ese email
         const response = await findAll();
         const usuarios = response?.value || response;
         
@@ -58,11 +57,11 @@ const register = async (userData) => {
             }
         }
         
-        // Preparar datos para el backend
+       
         const nuevoUsuario = {
             nombre: userData.nombre,
             apellido: userData.apellido,
-            correo: userData.email, // Convertir email a correo
+            correo: userData.email, 
             dni: userData.dni,
             direccion: userData.direccion,
             ciudad: userData.ciudad,
@@ -70,13 +69,12 @@ const register = async (userData) => {
             password: userData.password,
             fechaRegistro: new Date().toISOString().split('T')[0],
             estado: 'Activo'
-            // nombreDeUsuario se genera automáticamente en el backend
+            
         };
         
-        // Crear usuario
+       
         const usuarioCreado = await create(nuevoUsuario);
-        
-        // Retornar usuario sin contraseña
+       
         const { password: _, ...usuarioSinPassword } = usuarioCreado?.value || usuarioCreado;
         return usuarioSinPassword;
         
@@ -88,13 +86,13 @@ const register = async (userData) => {
 
 const updateProfile = async (userId, profileData) => {
     try {
-        // Convertir email a correo si existe
+        
         const datosActualizar = {
             id: userId,
             ...profileData
         };
         
-        // Si hay email, convertirlo a correo
+        
         if (datosActualizar.email) {
             datosActualizar.correo = datosActualizar.email;
             delete datosActualizar.email;
@@ -102,7 +100,7 @@ const updateProfile = async (userId, profileData) => {
         
         const usuarioActualizado = await update(datosActualizar);
         
-        // Retornar usuario sin contraseña
+        
         const { password: _, ...usuarioSinPassword } = usuarioActualizado;
         return usuarioSinPassword;
         
@@ -114,19 +112,19 @@ const updateProfile = async (userId, profileData) => {
 
 const changePassword = async (userId, currentPassword, newPassword) => {
     try {
-        // Obtener usuario actual
+        
         const usuario = await findOne(userId);
         
         if (!usuario) {
             throw new Error('Usuario no encontrado');
         }
         
-        // Verificar contraseña actual
+        
         if (usuario.password !== currentPassword) {
             throw new Error('La contraseña actual es incorrecta');
         }
         
-        // Actualizar contraseña
+       
         const datosActualizar = {
             id: userId,
             password: newPassword
@@ -141,7 +139,7 @@ const changePassword = async (userId, currentPassword, newPassword) => {
     }
 };
 
-// Funciones para manejo de sesión
+
 const saveUserSession = (usuario) => {
     localStorage.setItem('usuario', JSON.stringify(usuario));
     localStorage.setItem('isLoggedIn', 'true');

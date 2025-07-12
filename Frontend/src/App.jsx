@@ -70,7 +70,7 @@ function App() {
     }
   };
 
-  // Función para actualizar el usuario (login/logout/cambios)
+  
   const actualizarUsuario = (nuevoUsuario) => {
     setUsuarioActual(nuevoUsuario);
     if (nuevoUsuario) {
