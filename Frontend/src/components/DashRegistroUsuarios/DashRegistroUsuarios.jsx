@@ -36,7 +36,7 @@ const DashRegistroUsuarios = ( {lista_usuarios, setListaUsuarios,activoId,setAct
             </thead>
             <tbody>
                 {
-                lista_usuarios.slice(0, 7).map((usuario)=>(
+                lista_usuarios.slice(4, 20).map((usuario)=>(
                     <tr >
                         <td className="nombre2"> 
                             <img src={usuario.img} alt={usuario.nombre} /> {usuario.nombre}
