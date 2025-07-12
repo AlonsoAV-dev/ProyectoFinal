@@ -1,6 +1,38 @@
 import ResumenCompra from "../CarroCompras/ResumenCompra"
 import "./Checkout.scss"
+import apiOrden from "../../api/ordenApi.js";
+import { useState } from "react";
+
 const Checkout = () => {
+
+    const [orden, setOrden] = useState([]); 
+
+    const handleOrden = async (datosOrden) => {
+        try {
+            const response = await apiOrden.create(datosOrden);
+            setOrden(response.data);
+            console.log("Orden creada:", response.data);
+        } catch (error) {
+            console.error("Error al crear la orden:", error);
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const datosOrden = {
+            nombre: e.target.nombre.value,
+            apellido: e.target.apellido.value,
+            ciudad: e.target.ciudad.value,
+            departamento: e.target.departamento.value,
+            direccion: e.target.direccion.value,
+            codigoPostal: e.target.codigo_postal.value,
+            telefono: e.target.telefono.value,
+        };
+        handleOrden(datosOrden);
+    };  
+
+
+
 
     return(
         <>

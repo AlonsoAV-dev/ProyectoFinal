@@ -4,7 +4,7 @@ import itemCarritoApi from "../../api/itemCarritoApi.js";
  // Asegúrate de tener este API para manejar los items del carrito
 const handleAddToCart = async (producto) => {
     // 1. Obtener el ID del usuario (puede venir del contexto o estado)
-    const usuarioId = 15;
+    const usuarioId = 1;
 
     // 2. Buscar el carrito del usuario
     let carrito = await carritoApi.findByUsuario(usuarioId);

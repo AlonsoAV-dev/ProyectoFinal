@@ -1,7 +1,11 @@
 import "./Header.scss"
 import { Link } from "react-router-dom";
-
+import carritoApi from "../../api/carritoApi.js";
 function Header() {
+    const usuarioId = 1; // Cambia esto según tu lógica de usuario
+    
+
+
     return (
         <div className="header">
             <div className="left-header">
