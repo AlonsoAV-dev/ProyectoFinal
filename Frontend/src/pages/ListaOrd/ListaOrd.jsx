@@ -10,7 +10,7 @@ function ListaOrd() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Cargar órdenes desde la API
+    
     useEffect(() => {
         cargarOrdenes();
     }, []);
@@ -23,7 +23,7 @@ function ListaOrd() {
             const resultado = await ordenApi.findAll();
             
             if (Array.isArray(resultado)) {
-                // Formatear datos para el componente
+               
                 const ordenesFormateadas = resultado.map(orden => ({
                     id: `#${orden.id}`,
                     originalId: orden.id,
@@ -43,7 +43,7 @@ function ListaOrd() {
             setError('Error de conexión con el servidor');
             console.error('Error al cargar órdenes:', error);
             
-            // Fallback a datos dummy si falla la API
+            
             const dummyOrders = [
                 { id: '#1234', user: 'Juan Perez', date: '20/01/2025', total: 'S/199.00', status: 'entregado' },
                 { id: '#1235', user: 'Maria Gonzales', date: '20/01/2025', total: 'S/159.00', status: 'por entregar' },
@@ -56,7 +56,7 @@ function ListaOrd() {
         }
     };
 
-    // Buscar órdenes
+    
     const searchOrders = () => {
         if (searchTerm === '') {
             setFilteredOrders([...orders]);
@@ -69,7 +69,7 @@ function ListaOrd() {
         }
     };
 
-    // Ver detalles
+  
     const viewDetails = async (orderId, userName) => {
         try {
             const originalId = orderId.replace('#', '');
@@ -89,7 +89,7 @@ function ListaOrd() {
         }
     };
 
-    // Cambiar estado de orden usando la API
+    
     const toggleOrderStatus = async (orderId, userName) => {
         try {
             const originalId = orderId.replace('#', '');
@@ -100,11 +100,11 @@ function ListaOrd() {
             const currentOrder = orders[orderIndex];
             const newStatus = currentOrder.status === 'entregado' ? 'Pendiente' : 'Entregado';
             
-            // Llamar a la API para actualizar el estado
+            
             const resultado = await ordenApi.cambiarEstadoOrden(originalId, newStatus);
             
             if (resultado.success) {
-                // Actualizar estado local
+                
                 const updatedOrders = [...orders];
                 updatedOrders[orderIndex] = {
                     ...currentOrder,
@@ -113,7 +113,7 @@ function ListaOrd() {
                 };
                 
                 setOrders(updatedOrders);
-                searchOrders(); // Refiltrar
+                searchOrders(); 
                 
                 alert(`Estado actualizado: ${newStatus}`);
             } else {
@@ -125,7 +125,7 @@ function ListaOrd() {
         }
     };
 
-    // Paginación
+    
     const previousPage = () => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
     };
@@ -134,12 +134,12 @@ function ListaOrd() {
         if (currentPage < 10) setCurrentPage(currentPage + 1);
     };
 
-    // Efecto para búsqueda
+    
     useEffect(() => {
         searchOrders();
     }, [searchTerm, orders]);
 
-    // Renderizado con estados de carga
+    
     if (loading) {
         return (
             <div className="container">

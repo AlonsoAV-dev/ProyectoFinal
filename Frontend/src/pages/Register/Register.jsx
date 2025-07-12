@@ -68,19 +68,19 @@ function Register() {
       setLoading(true);
       setError('');
       
-      // Validar formulario
+     
       validarFormulario();
       
-      // Preparar datos para enviar
+     
       const { confirmPassword, ...userData } = formData;
       
-      // Registrar usuario usando API
+     
       const usuarioCreado = await usuarioApi.register(userData);
       
-      // Guardar sesión del usuario
+      
       usuarioApi.saveUserSession(usuarioCreado);
       
-      // Navegar a página principal
+      
       navigate('/pagina-principal');
       
     } catch (error) {

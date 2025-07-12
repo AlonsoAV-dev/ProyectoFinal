@@ -22,15 +22,15 @@ function Login({ onActualizarUsuario }) {
       setLoading(true);
       setError("");
       
-      // Intentar login con API real
+     
       const usuario = await usuarioApi.login(correo, password);
       
-      // Actualizar usuario usando la función del padre (App.jsx)
+      
       if (onActualizarUsuario) {
         onActualizarUsuario(usuario);
       }
       
-      // Navegar a página principal
+     
       navigate("/pagina-principal");
       
     } catch (error) {

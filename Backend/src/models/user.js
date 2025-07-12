@@ -17,15 +17,15 @@ const user = sequelize.define('user', {
     },
     direccion: {
       type: DataTypes.STRING,
-      allowNull: true, // Hacer opcional para registro básico
+      allowNull: true, 
     },
     ciudad: {
       type: DataTypes.STRING,
-      allowNull: true, // Hacer opcional para registro básico
+      allowNull: true, 
     },
     telefono: {
       type: DataTypes.STRING,
-      allowNull: true, // Hacer opcional para registro básico
+      allowNull: true, 
     },
     correo: {
       type: DataTypes.STRING,
@@ -37,13 +37,13 @@ const user = sequelize.define('user', {
     },
     nombreDeUsuario: {
       type: DataTypes.STRING,
-      allowNull: true, // Hacer opcional, se puede generar automáticamente
+      allowNull: true,
       unique: true,
       field: 'nombredeusuario'
     },
     dni: {
       type: DataTypes.STRING,
-      allowNull: false, // Campo que viene del formulario de registro
+      allowNull: false, 
       unique: true
     },
     password: {

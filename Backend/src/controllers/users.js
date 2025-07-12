@@ -16,14 +16,14 @@ const findOne = async (req, res) => {
 const create = async (req, res) => {
     const payload = req.body;
     
-    // Generar nombreDeUsuario automáticamente si no se proporciona
+    
     if (!payload.nombreDeUsuario) {
         const baseUsername = `${payload.nombre}${payload.apellido}`.toLowerCase().replace(/\s+/g, '');
-        const timestamp = Date.now().toString().slice(-4); // Últimos 4 dígitos del timestamp
+        const timestamp = Date.now().toString().slice(-4); 
         payload.nombreDeUsuario = `${baseUsername}${timestamp}`;
     }
     
-    // Agregar fechaRegistro si no está presente
+    
     if (!payload.fechaRegistro) {
         payload.fechaRegistro = new Date().toISOString().split('T')[0];
     }
