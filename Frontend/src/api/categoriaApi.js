@@ -9,7 +9,8 @@ const update = async (payload) => await base.put(endpoint, payload);
 const remove = async (id) => await base.remove(`${endpoint}/${id}`);  // Método remove corregido
 const findOne = async (id) => await base.get(`${endpoint}/${id}`);
 
-// Funciones específicas para categorías
+
+
 const obtenerCategorias = async () => {
     try {
         const categorias = await findAll();
@@ -85,4 +86,4 @@ const api = {
     obtenerCategoriaPorId
 };
 
-export default api; 
+export default api;
