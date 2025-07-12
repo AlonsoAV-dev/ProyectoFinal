@@ -4,24 +4,53 @@ import "./OrdenCompletada.scss";
 import check from "/assets/check.png"
 import delivery from  "/assets/delivery-logo.png"
 import { Link } from "react-router-dom";
+import ItemOrdenApi from "../../api/itemOrdenApi.js";
+
 const OrdenCompletada = () => {
+  const usuarioId = 1; // o el que estés usando
   const resumen = JSON.parse(localStorage.getItem("resumen")) || {
-    subtotal: 0,
-    descuento: 0,
-    total: 0,
-    cantidadTotal: 0,
-    productos: []
+      subtotal: 0,
+      descuento: 0,
+      total: 0,
+      cantidadTotal: 0,
+      productos: []
+    };
+  const limpiarCompra = async () => {
+    localStorage.removeItem("resumen");
+    localStorage.removeItem("datosEnvio");
+
+    try {
+      const carrito = await carritoApi.findByUsuario(usuarioId);
+      if (!carrito) return;
+
+      const items = await itemCarritoApi.findByCarrito(carrito.id);
+
+      for (const item of items) {
+        await itemCarritoApi.remove(item.id);
+      }
+    } catch (error) {
+      console.error("❌ Error limpiando el carrito:", error);
+    }
   };
+<<<<<<< HEAD
   
   // Obtener ID de orden si está disponible
   const ordenId = localStorage.getItem("ultimaOrdenId") || null;
   // Podrías guardar esta info al confirmar pago
+=======
+  const datosEnvio = JSON.parse(localStorage.getItem("datosEnvio")) || {};
+>>>>>>> origin/AlonsoAV-dev
   const direccion = {
-    direccion: "Av la molina 12334",
-    ciudad: "Lima - Lima",
-    celular: "990892131",
-    entrega: "04/05/2025"
+      direccion: datosEnvio.direccion || "No definida",
+      ciudad: `${datosEnvio.ciudad || ""} - ${datosEnvio.departamento || ""}`,
+      celular: datosEnvio.telefono || "No definido",
+      entrega: new Date().toLocaleDateString("es-PE", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+      })
   };
+
 
   return (
     <div className="orden-completada">
@@ -73,6 +102,7 @@ const OrdenCompletada = () => {
             <p>Fecha de entrega aproximada:<b> {direccion.entrega}</b></p>
           </div>
           <div className="boton-ofertas">
+<<<<<<< HEAD
             {ordenId && (
               <Link to={`/orden/${ordenId}`} style={{ marginRight: '10px' }}>
                 <button style={{ backgroundColor: '#007bff', marginRight: '10px' }}>
@@ -87,6 +117,10 @@ const OrdenCompletada = () => {
               }}>
                 Ver más ofertas
               </button>
+=======
+              <Link to={"/ "} >
+              <button onClick={limpiarCompra}>Ver más ofertas</button>
+>>>>>>> origin/AlonsoAV-dev
             </Link>
           </div>
         </div>

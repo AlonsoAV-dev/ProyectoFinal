@@ -7,7 +7,11 @@ import itemCarritoApi from "../../api/itemCarritoApi.js";
 import productosApi from "../../api/productoApi.js";
 
 const CarroCompras = () => {
+<<<<<<< HEAD
     const usuarioId = 1;   // LINEA USUARIO
+=======
+    const usuarioId = 1;
+>>>>>>> origin/AlonsoAV-dev
     const [itemCarrito, setItemCarrito] = useState([]);
     const [productosEnCarrito, setProductosEnCarrito] = useState([]);
 
@@ -28,7 +32,7 @@ const CarroCompras = () => {
                 return {
                     ...producto,
                     cantidad: item.cantidad,
-                    idItemCarrito: item.id // importante para update
+                    idItemCarrito: item.id 
                 };
             })
         );
@@ -48,7 +52,6 @@ const CarroCompras = () => {
         const nuevosProductos = productosEnCarrito.map((p) => {
             if (p.id === idProducto) {
                 const nuevaCantidad = Math.max(p.cantidad + op, 1);
-                // Actualiza backend
                 itemCarritoApi.update({
                     id: idItemCarrito,
                     cantidad: nuevaCantidad
@@ -71,7 +74,7 @@ const CarroCompras = () => {
 
     const descuento = subtotal * 0.10;
     const total = subtotal - descuento;
-
+    
     localStorage.setItem("resumen", JSON.stringify({
         subtotal,
         descuento,

@@ -73,4 +73,12 @@ VALUES
 (5, '2025-07-05', 150.00, 140.00, 'Retiro en tienda', '6011000000000004', 'Discover','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00'),
 (6, '2025-07-06', 60.75, 55.75, 'Delivery', '4111111111111111', 'Visa','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00'),
 (7, '2025-07-07', 110.20, 100.20, 'Delivery', '5500000000000004', 'MasterCard','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00'),
+<<<<<<< HEAD
 (8, '2025-07-08', 95.60, 90.00, 'Retiro en tienda', '340000000000009', 'American Express','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00')
+=======
+(8, '2025-07-08', 95.60, 90.00, 'Retiro en tienda', '340000000000009', 'American Express','Entregado','2025-07-10 12:00:00', '2025-07-10 12:00:00')
+
+INSERT INTO Carritos (id, idUsuario, createdAt, updatedAt)
+VALUES 
+(1, 101, NOW(), NOW());
+>>>>>>> origin/AlonsoAV-dev

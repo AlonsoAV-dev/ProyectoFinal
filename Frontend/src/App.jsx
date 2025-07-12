@@ -121,15 +121,9 @@ function App() {
           <Route path="/" element={<Inicio categorias={lista_categorias} />} /> 
           <Route path="/login" element={<Login onActualizarUsuario={actualizarUsuario} />} />
           <Route path="/productos" element={<TablaProductos/>} />
-<<<<<<< HEAD
-          <Route path="/agregar" element={<AgregarProducto  />} />
-          <Route path="/editar/:id" element={<EditarProducto />} />
-          <Route path="/carrito" element={<CarroCompras />}/>
-=======
           <Route path="/agregar" element={<AgregarProducto categorias={lista_categorias} />} />
           <Route path="/editar/:id" element={<EditarProducto categorias={lista_categorias} />} />
           <Route path="/carrito" element={<CarroCompras lista_productos={lista_productos} setLista_Productos={setLista_Productos}/>}/>
->>>>>>> origin/rama-iagol
           <Route path="/agregar-categoria" element={<AgregarCategoria categorias={lista_categorias} setCategorias={setListaCategorias}/>}/>
           <Route path="/editar-categoria/:id" element={<EditarCategoria />}/>
           <Route path="/categorias" element={<Categorias categorias={lista_categorias} />}/>

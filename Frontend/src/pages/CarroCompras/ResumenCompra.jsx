@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import "./ResumenCompra.scss"
 
 const ResumenCompra=({modo }) =>{
+    
+
+
 
 
     const resumenGuardado = JSON.parse(localStorage.getItem("resumen")) || {

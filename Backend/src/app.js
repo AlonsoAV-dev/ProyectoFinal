@@ -11,6 +11,8 @@ import ordenRouter from './routes/orden.js';
 import carritoRouter from './routes/carrito.js';
 import itemCarritoRouter from './routes/itemCarrito.js';
 import categoriasRouter from './routes/categorias.js';
+import itemOrden from './routes/itemOrden.js';
+
 const app = express();
 app.use(cors())
 app.use(bodyParser.json())
@@ -27,6 +29,6 @@ app.use('/orden', ordenRouter);
 app.use('/carrito', carritoRouter);
 app.use('/itemCarrito', itemCarritoRouter);
 app.use('/categorias', categoriasRouter); 
-
+app.use('/itemOrden', itemOrden)
 
 export default app;
