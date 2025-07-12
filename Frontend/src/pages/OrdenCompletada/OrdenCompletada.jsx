@@ -12,6 +12,9 @@ const OrdenCompletada = () => {
     cantidadTotal: 0,
     productos: []
   };
+  
+  // Obtener ID de orden si está disponible
+  const ordenId = localStorage.getItem("ultimaOrdenId") || null;
   // Podrías guardar esta info al confirmar pago
   const direccion = {
     direccion: "Av la molina 12334",
@@ -26,6 +29,11 @@ const OrdenCompletada = () => {
         <div className="contenedor-titulo">
           <h1>Orden completada 😁 </h1>
           <p>Gracias por tu compra!</p>
+          {ordenId && (
+            <p style={{ marginTop: '10px', color: '#666', fontSize: '14px' }}>
+              Número de orden: <strong>#{ordenId}</strong>
+            </p>
+          )}
         </div>
         <img src={check} alt="" />
       </div>
@@ -65,10 +73,22 @@ const OrdenCompletada = () => {
             <p>Fecha de entrega aproximada:<b> {direccion.entrega}</b></p>
           </div>
           <div className="boton-ofertas">
-              <Link to={"/ "} >
-            <button onClick={() => localStorage.removeItem("resumen")}>Ver más ofertas</button>
+            {ordenId && (
+              <Link to={`/orden/${ordenId}`} style={{ marginRight: '10px' }}>
+                <button style={{ backgroundColor: '#007bff', marginRight: '10px' }}>
+                  Ver detalles de la orden
+                </button>
+              </Link>
+            )}
+            <Link to={"/ "} >
+              <button onClick={() => {
+                localStorage.removeItem("resumen");
+                localStorage.removeItem("ultimaOrdenId");
+              }}>
+                Ver más ofertas
+              </button>
             </Link>
-            </div>
+          </div>
         </div>
       </div>
     </div>

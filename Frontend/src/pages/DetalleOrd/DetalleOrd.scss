@@ -255,41 +255,261 @@
     }
 }
 
-// Media Queries para responsividad (ejemplo básico)
+// Estilos para mensajes de carga y error
+.loading-message, .error-message {
+  text-align: center;
+  padding: 50px;
+  margin: 20px 0;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-radius: 8px;
+  border: 1px solid #f5c6cb;
+}
+
+.retry-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  
+  &:hover {
+    background-color: #c82333;
+  }
+}
+
+// Estilos para el header de la orden
+.detalle-ord-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.detalle-ord-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #212529;
+  margin: 0;
+}
+
+.order-id {
+  color: #007bff;
+}
+
+.order-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  .status-label {
+    font-weight: 500;
+    color: #6c757d;
+  }
+}
+
+.order-total {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  .total-label {
+    font-weight: 500;
+    color: #6c757d;
+  }
+  
+  .total-amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #28a745;
+  }
+}
+
+// Estilos para la sección de información de la orden
+.order-info-section {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  
+  h2 {
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    color: #495057;
+  }
+}
+
+.order-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detail-label {
+  font-weight: 600;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.detail-value {
+  font-weight: 500;
+  color: #212529;
+  font-size: 1rem;
+}
+
+// Estilos para diferentes estados de orden
+.status-entregado {
+  color: #28a745;
+  font-weight: 600;
+  background-color: #d4edda;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.status-procesando {
+  color: #fd7e14;
+  font-weight: 600;
+  background-color: #fff3cd;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.status-pendiente {
+  color: #dc3545;
+  font-weight: 600;
+  background-color: #f8d7da;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+        }
+
+.status-cancelado {
+  color: #6c757d;
+  font-weight: 600;
+  background-color: #e2e3e5;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+    }
+
+// Estilos para la sección de productos
+.productos-section {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  
+  h2 {
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    color: #495057;
+  }
+}
+
+.productos-placeholder {
+  text-align: center;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 2px dashed #dee2e6;
+  
+  p {
+    margin: 10px 0;
+    color: #6c757d;
+    
+    &:first-child {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #495057;
+    }
+    
+    em {
+      color: #007bff;
+      font-style: italic;
+    }
+  }
+}
+
+// Estilos para la paginación
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 30px;
+  padding: 20px;
+}
+
+.pagination-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  &:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  &:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+}
+
+.pagination-info {
+  padding: 8px 12px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  font-weight: 500;
+  color: #495057;
+}
+
+// Responsive design
 @media (max-width: 768px) {
-    .order-header {
-        flex-direction: column;
-        align-items: stretch; // Que ocupen todo el ancho
-        .order-summary {
-            text-align: left;
-            margin-top: 15px;
-        }
-    }
-    .products-table {
-        th, td {
-            padding: 10px 8px;
-            font-size: 0.9rem; // Reducir tamaño de fuente en tablas
-        }
-        .product-image-table {
-            width: 35px;
-            height: 35px;
-        }
-        .product-id-table {
-            font-size: 0.8rem;
-        }
-    }
-    .breadcrumb-container {
-        font-size: 0.85rem;
-    }
-    .order-title {
-        font-size: 1.7rem;
-    }
-    .products-title {
-        font-size: 1.2rem;
-    }
-    .pagination-products button {
-        padding: 6px 10px;
-        font-size: 0.85rem;
+  .order-details-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .products-table {
+    overflow-x: auto;
+  }
+  .detalle-ord-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .order-details-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .detalle-ord-title {
+    font-size: 1.5rem;
+  }
+  
+  .order-total .total-amount {
+    font-size: 1.2rem;
     }
 }
 

@@ -1,9 +1,9 @@
 import Sequelize from 'sequelize'
 
-
+// NOTA: Cada desarrollador debe cambiar estas credenciales por las suyas locales
 const hostname = 'localhost';
 const username = 'postgres';
-const password = 'admin123';
+const password = 'admin'; // Tu contraseña de PostgreSQL
 const database = 'E-commerce';
 const port = 5432;
 const dialect = 'postgres'

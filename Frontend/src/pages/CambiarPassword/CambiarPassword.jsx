@@ -2,9 +2,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 import './CambiarPassword.scss'; // Crearemos este archivo SCSS
 import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Necesitarás instalar react-icons: npm install react-icons
-
-// Simulación de contraseña actual (en una app real, esto se verificaría en el backend)
-const CONTRASENA_ACTUAL_EJEMPLO = "password123";
+import usuarioApi from '../../api/usuarioApi';
 
 function CambiarPassword() {
     const [contrasenaActual, setContrasenaActual] = useState('');
@@ -16,6 +14,7 @@ function CambiarPassword() {
     const [mostrarConfirmar, setMostrarConfirmar] = useState(false);
 
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const validarFortalezaPassword = (password) => {
         // Ejemplo: Mínimo 8 caracteres, 1 mayúscula, 1 minúscula, 1 número
@@ -23,19 +22,12 @@ function CambiarPassword() {
         return regex.test(password);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError(''); // Limpiar errores previos
 
         if (!contrasenaActual || !nuevaContrasena || !confirmarContrasena) {
             Swal.fire('Campos incompletos', 'Por favor, completa todos los campos.', 'error');
-            return;
-        }
-
-        // Simulación de verificación de contraseña actual
-        if (contrasenaActual !== CONTRASENA_ACTUAL_EJEMPLO) {
-            setError('La contraseña actual es incorrecta.');
-            Swal.fire('Error', 'La contraseña actual es incorrecta.', 'error');
             return;
         }
 
@@ -51,14 +43,31 @@ function CambiarPassword() {
             return;
         }
 
-        // Simular cambio de contraseña
-        console.log("Contraseña cambiada exitosamente a:", nuevaContrasena);
-        // Aquí llamarías a la API para cambiar la contraseña.
+        try {
+            setLoading(true);
+            
+            // Obtener usuario actual de la sesión
+            const usuarioActual = usuarioApi.getUserSession();
+            if (!usuarioActual || !usuarioActual.id) {
+                throw new Error('No hay sesión de usuario activa');
+            }
 
-        Swal.fire('¡Contraseña Cambiada!', 'Tu contraseña ha sido actualizada correctamente.', 'success');
-        setContrasenaActual('');
-        setNuevaContrasena('');
-        setConfirmarContrasena('');
+            // Cambiar contraseña usando la API
+            await usuarioApi.changePassword(usuarioActual.id, contrasenaActual, nuevaContrasena);
+
+            Swal.fire('¡Contraseña Cambiada!', 'Tu contraseña ha sido actualizada correctamente.', 'success');
+            setContrasenaActual('');
+            setNuevaContrasena('');
+            setConfirmarContrasena('');
+            setError('');
+            
+        } catch (error) {
+            console.error('Error al cambiar contraseña:', error);
+            setError(error.message || 'Error al cambiar la contraseña');
+            Swal.fire('Error', error.message || 'Error al cambiar la contraseña', 'error');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -118,8 +127,16 @@ function CambiarPassword() {
                         </div>
                     </div>
 
-                    <button type="submit" className="btn-cambiar-password">
-                        Cambiar Contraseña
+                    <button 
+                        type="submit" 
+                        className="btn-cambiar-password"
+                        disabled={loading}
+                        style={{
+                            backgroundColor: loading ? '#ccc' : '',
+                            cursor: loading ? 'not-allowed' : 'pointer'
+                        }}
+                    >
+                        {loading ? 'Cambiando contraseña...' : 'Cambiar Contraseña'}
                     </button>
                 </form>
             </div>

@@ -1,71 +1,145 @@
 .register {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 64px 16px;
-    background-color: #ffffff;
-    min-height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 64px 16px;
+  background-color: #ffffff;
+  min-height: 70vh;
+}
+
+.form-register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin: 10px;
+  gap: 10px;
+}
+
+.register-card {
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+}
+
+.register-card h2 {
+  text-align: left;
+  margin-bottom: 24px;
+  font-size: 24px;
+  color: #333;
+}
+
+.fila-sector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.sector {
+  display: flex;
+  flex-direction: column;
+  height: 71px;
+}
+
+.sector p {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+.sector input {
+  width: 273px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.boton-container {
+  width: 100%;
+  text-align: center;
+  margin-top: 24px;
+}
+
+.boton-registrar {
+  background-color: #ff4c2b;
+  color: #fff;
+  width: 40%;
+  min-width: 200px;
+  max-width: 300px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+  
+  &:hover:not(:disabled) {
+    background-color: #e63e1e;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 76, 43, 0.3);
   }
   
-  .register-card {
-    background-color: #ffffff;
-    padding: 32px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 700px;
+  &:active:not(:disabled) {
+    transform: translateY(0);
   }
   
-  .register-card h2 {
-    text-align: left;
-    margin-bottom: 24px;
-    font-size: 24px;
-    color: #333;
+  &:disabled {
+    background-color: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
   
-  .fila-sector {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
+  // Estado de carga
+  &.loading {
+    cursor: not-allowed;
+    color: transparent;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top: 2px solid #ffffff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
   }
-  
-  .sector {
-    display: flex;
-    flex-direction: column;
-    height: 71px;
-  }
-  
-  .sector p {
-    margin-bottom: 6px;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .sector input {
-    width: 273px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-  }
-  
+}
+
+// Animación para el spinner de carga
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+// Responsive para el botón
+@media (max-width: 768px) {
   .boton-registrar {
-    background-color: #ff4c2b;
-    color: #fff;
-    width: 40%;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    display: block;
-    margin: 0 auto;
-    
-    
+    width: 80%;
+    max-width: 280px;
   }
-  
-  .boton-registrar:hover {
-    background-color: #ff4c2b;
+}
+
+@media (max-width: 480px) {
+  .boton-registrar {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 16px;
   }
+}

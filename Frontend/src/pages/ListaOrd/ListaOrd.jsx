@@ -1,24 +1,60 @@
 import React, { useState, useEffect } from "react";
 import "./ListaOrd.scss";
+import ordenApi from "../../api/ordenApi.js";
 
 function ListaOrd() {
-    const [orders, setOrders] = useState([
-        { id: '#1234', user: 'Juan Perez', date: '20/01/2025', total: 'S/199.00', status: 'entregado' },
-        { id: '#1234', user: 'Maria Gonzales', date: '20/01/2025', total: 'S/199.00', status: 'por entregar' },
-        { id: '#1234', user: 'Marco Aurelio', date: '20/01/2025', total: 'S/199.00', status: 'entregado' },
-        { id: '#1234', user: 'Ana Dias', date: '20/01/2025', total: 'S/199.00', status: 'entregado' },
-        { id: '#1234', user: 'Juan Perez', date: '20/01/2025', total: 'S/199.00', status: 'entregado' },
-        { id: '#1234', user: 'Maria Gonzales', date: '20/01/2025', total: 'S/199.00', status: 'por entregar' },
-        { id: '#1234', user: 'Marco Aurelio', date: '20/01/2025', total: 'S/199.00', status: 'entregado' },
-        { id: '#1234', user: 'Ana Dias', date: '20/01/2025', total: 'S/199.00', status: 'entregado' },
-        { id: '#1234', user: 'Juan Perez', date: '20/01/2025', total: 'S/199.00', status: 'entregado' },
-        { id: '#1234', user: 'Maria Gonzales', date: '20/01/2025', total: 'S/199.00', status: 'por entregar' },
-        { id: '#1234', user: 'Marco Aurelio', date: '20/01/2025', total: 'S/199.00', status: 'entregado' },
-    ]);
-    
-    const [filteredOrders, setFilteredOrders] = useState([...orders]);
+    const [orders, setOrders] = useState([]);
+    const [filteredOrders, setFilteredOrders] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Cargar órdenes desde la API
+    useEffect(() => {
+        cargarOrdenes();
+    }, []);
+
+    const cargarOrdenes = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            
+            const resultado = await ordenApi.findAll();
+            
+            if (Array.isArray(resultado)) {
+                // Formatear datos para el componente
+                const ordenesFormateadas = resultado.map(orden => ({
+                    id: `#${orden.id}`,
+                    originalId: orden.id,
+                    user: `Usuario ${orden.idUsuario}`,
+                    date: new Date(orden.fecha).toLocaleDateString('es-ES'),
+                    total: `S/${orden.total}`,
+                    status: orden.estado.toLowerCase() === 'entregado' ? 'entregado' : 'por entregar',
+                    originalStatus: orden.estado
+                }));
+                
+                setOrders(ordenesFormateadas);
+                setFilteredOrders(ordenesFormateadas);
+            } else {
+                setError('Error al cargar órdenes desde el servidor');
+            }
+        } catch (error) {
+            setError('Error de conexión con el servidor');
+            console.error('Error al cargar órdenes:', error);
+            
+            // Fallback a datos dummy si falla la API
+            const dummyOrders = [
+                { id: '#1234', user: 'Juan Perez', date: '20/01/2025', total: 'S/199.00', status: 'entregado' },
+                { id: '#1235', user: 'Maria Gonzales', date: '20/01/2025', total: 'S/159.00', status: 'por entregar' },
+                { id: '#1236', user: 'Marco Aurelio', date: '19/01/2025', total: 'S/289.00', status: 'entregado' }
+            ];
+            setOrders(dummyOrders);
+            setFilteredOrders(dummyOrders);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     // Buscar órdenes
     const searchOrders = () => {
@@ -34,19 +70,59 @@ function ListaOrd() {
     };
 
     // Ver detalles
-    const viewDetails = (orderId, userName) => {
-        alert(`Ver detalles de la orden ${orderId} de ${userName}`);
+    const viewDetails = async (orderId, userName) => {
+        try {
+            const originalId = orderId.replace('#', '');
+            const detalles = await ordenApi.findOneWithDetails(originalId);
+            
+            if (detalles) {
+                alert(`Detalles de la orden ${orderId}:\n` +
+                      `Usuario: ${userName}\n` +
+                      `Total: S/${detalles.total}\n` +
+                      `Estado: ${detalles.estado}\n` +
+                      `Fecha: ${new Date(detalles.fecha).toLocaleDateString()}`);
+            } else {
+                alert(`Ver detalles de la orden ${orderId} de ${userName}`);
+            }
+        } catch (error) {
+            alert(`Ver detalles de la orden ${orderId} de ${userName}`);
+        }
     };
 
-    // Cambiar estado de orden
-    const toggleOrderStatus = (orderId, userName) => {
-        const updatedOrders = orders.map(order => 
-            order.id === orderId && order.user === userName
-                ? { ...order, status: order.status === 'entregado' ? 'por entregar' : 'entregado' } 
-                : order
-        );
-        setOrders(updatedOrders);
-        searchOrders(); // Refiltrar
+    // Cambiar estado de orden usando la API
+    const toggleOrderStatus = async (orderId, userName) => {
+        try {
+            const originalId = orderId.replace('#', '');
+            const orderIndex = orders.findIndex(order => order.id === orderId && order.user === userName);
+            
+            if (orderIndex === -1) return;
+            
+            const currentOrder = orders[orderIndex];
+            const newStatus = currentOrder.status === 'entregado' ? 'Pendiente' : 'Entregado';
+            
+            // Llamar a la API para actualizar el estado
+            const resultado = await ordenApi.cambiarEstadoOrden(originalId, newStatus);
+            
+            if (resultado.success) {
+                // Actualizar estado local
+                const updatedOrders = [...orders];
+                updatedOrders[orderIndex] = {
+                    ...currentOrder,
+                    status: newStatus.toLowerCase() === 'entregado' ? 'entregado' : 'por entregar',
+                    originalStatus: newStatus
+                };
+                
+                setOrders(updatedOrders);
+                searchOrders(); // Refiltrar
+                
+                alert(`Estado actualizado: ${newStatus}`);
+            } else {
+                alert(`Error al actualizar estado: ${resultado.message}`);
+            }
+        } catch (error) {
+            console.error('Error al cambiar estado:', error);
+            alert('Error de conexión al cambiar estado');
+        }
     };
 
     // Paginación
@@ -63,10 +139,34 @@ function ListaOrd() {
         searchOrders();
     }, [searchTerm, orders]);
 
+    // Renderizado con estados de carga
+    if (loading) {
+        return (
+            <div className="container">
+                <h1>Listado de órdenes</h1>
+                <div style={{ textAlign: 'center', padding: '50px' }}>
+                    <p>Cargando órdenes...</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <>
             <div className="container">
                 <h1>Listado de órdenes</h1>
+
+                {error && (
+                    <div style={{
+                        backgroundColor: '#f8d7da',
+                        color: '#721c24',
+                        padding: '10px',
+                        borderRadius: '5px',
+                        marginBottom: '20px'
+                    }}>
+                        ⚠️ {error}
+                    </div>
+                )}
 
                 <div className="search-section">
                     <input 
@@ -76,7 +176,14 @@ function ListaOrd() {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                     />
-                    <button className="search-user-btn">Buscar</button>
+                    <button className="search-user-btn" onClick={searchOrders}>Buscar</button>
+                    <button 
+                        className="search-user-btn" 
+                        onClick={cargarOrdenes}
+                        style={{ marginLeft: '10px', backgroundColor: '#28a745' }}
+                    >
+                        🔄 Actualizar
+                    </button>
                 </div>
 
                 <table className="users-table">
@@ -91,29 +198,47 @@ function ListaOrd() {
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredOrders.map((order, index) => (
-                            <tr className="user-row" key={`${order.id}-${order.user}-${index}`}>
-                                <td className="order-id">{order.id}</td>
-                                <td className="user-info-cell">
-                                    <div className="user-name">{order.user}</div>
-                                </td>
-                                <td>{order.date}</td>
-                                <td className="order-total">{order.total}</td>
-                                <td>
-                                    <span className={`status ${order.status}`}>
-                                        {order.status === 'entregado' ? 'Entregado' : 'Por entregar'}
-                                    </span>
-                                </td>
-                                <td className="actions">
-                                    <button 
-                                        className="action-btn details-btn" 
-                                        onClick={() => viewDetails(order.id, order.user)}
-                                    >
-                                        Ver detalles
-                                    </button>
+                        {filteredOrders.length === 0 ? (
+                            <tr>
+                                <td colSpan="6" style={{ textAlign: 'center', padding: '20px' }}>
+                                    No se encontraron órdenes
                                 </td>
                             </tr>
-                        ))}
+                        ) : (
+                            filteredOrders.map((order, index) => (
+                                <tr className="user-row" key={`${order.id}-${order.user}-${index}`}>
+                                    <td className="order-id">{order.id}</td>
+                                    <td className="user-info-cell">
+                                        <div className="user-name">{order.user}</div>
+                                    </td>
+                                    <td>{order.date}</td>
+                                    <td className="order-total">{order.total}</td>
+                                    <td>
+                                        <span className={`status ${order.status}`}>
+                                            {order.status === 'entregado' ? 'Entregado' : 'Por entregar'}
+                                        </span>
+                                    </td>
+                                    <td className="actions">
+                                        <button 
+                                            className="action-btn details-btn" 
+                                            onClick={() => viewDetails(order.id, order.user)}
+                                        >
+                                            Ver detalles
+                                        </button>
+                                        <button 
+                                            className="action-btn" 
+                                            onClick={() => toggleOrderStatus(order.id, order.user)}
+                                            style={{ 
+                                                marginLeft: '5px',
+                                                backgroundColor: order.status === 'entregado' ? '#ffc107' : '#28a745'
+                                            }}
+                                        >
+                                            {order.status === 'entregado' ? 'Marcar pendiente' : 'Marcar entregado'}
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
                     </tbody>
                 </table>
 
